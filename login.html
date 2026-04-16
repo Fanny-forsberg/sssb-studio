@@ -8,55 +8,57 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    body { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 24px; }
+    body { display:flex; align-items:center; justify-content:center; min-height:100vh; padding:24px; }
     .login-box {
-      width: 100%; max-width: 400px;
-      background: var(--white); border: 2px solid var(--brown);
-      border-radius: var(--radius-lg); padding: 40px 32px;
-      box-shadow: var(--shadow);
+      width:100%; max-width:400px;
+      background:var(--white); border:2px solid var(--brown);
+      border-radius:var(--radius-lg); padding:44px 34px 36px;
+      box-shadow:var(--shadow);
     }
     .login-logo {
-      font-family: 'Fraunces', Georgia, serif;
-      font-weight: 900; font-size: 28px; color: var(--brown);
-      text-align: center; margin-bottom: 6px;
+      font-family:'Fraunces',Georgia,serif;
+      font-weight:900; font-size:30px; color:var(--brown);
+      text-align:center; margin-bottom:4px;
     }
-    .login-logo span { color: var(--red); }
-    .login-sub {
-      text-align: center; font-size: 14px; color: var(--tan);
-      margin-bottom: 28px;
-    }
-    .login-box .field { margin-bottom: 16px; }
+    .login-logo span { color:var(--red); }
+    .login-sub { text-align:center; font-size:14px; color:var(--tan); margin-bottom:32px; }
+    .login-box .field { margin-bottom:18px; }
     .login-box input[type="email"],
     .login-box input[type="password"] {
-      width: 100%; border: 2px solid var(--border-dark);
-      border-radius: var(--radius); padding: 12px 14px;
-      font-size: 15px; font-family: inherit; color: var(--brown);
-      background: var(--cream); outline: none;
-      transition: border-color .15s, box-shadow .15s;
+      width:100%; border:2px solid var(--border-dark);
+      border-radius:var(--radius); padding:13px 14px;
+      font-size:15px; font-family:inherit; color:var(--brown);
+      background:var(--cream); outline:none;
+      transition:border-color .15s, box-shadow .15s;
     }
     .login-box input:focus {
-      border-color: var(--brown);
-      box-shadow: 3px 3px 0 var(--brown);
-      background: var(--white);
+      border-color:var(--brown);
+      box-shadow:3px 3px 0 var(--brown);
+      background:var(--white);
     }
-    .login-box .btn-primary { width: 100%; text-align: center; margin-top: 8px; }
+    .login-box .btn-primary { width:100%; text-align:center; margin-top:6px; }
     .login-error {
-      background: #FEF2F2; border: 2px solid var(--red);
-      border-radius: var(--radius); padding: 10px 14px;
-      font-size: 13px; color: var(--red); font-weight: 600;
-      margin-bottom: 16px; display: none;
+      background:#FEF2F2; border:2px solid var(--red);
+      border-radius:var(--radius); padding:10px 14px;
+      font-size:13px; color:var(--red); font-weight:600;
+      margin-bottom:16px; display:none;
+    }
+    .login-success {
+      background:var(--green-light); border:2px solid var(--green);
+      border-radius:var(--radius); padding:10px 14px;
+      font-size:13px; color:var(--green); font-weight:600;
+      margin-bottom:16px; display:none;
     }
     .login-toggle {
-      text-align: center; margin-top: 16px;
-      font-size: 13px; color: var(--tan);
+      text-align:center; margin-top:18px;
+      font-size:13px; color:var(--tan);
     }
     .login-toggle a {
-      color: var(--red); text-decoration: underline; cursor: pointer;
-      font-weight: 600;
+      color:var(--red); text-decoration:underline; cursor:pointer; font-weight:600;
     }
-    .login-info {
-      text-align: center; font-size: 12px; color: var(--tan-light);
-      margin-top: 20px; line-height: 1.5;
+    .login-footer {
+      text-align:center; font-size:11px; color:var(--tan-light);
+      margin-top:22px; line-height:1.5;
     }
   </style>
 </head>
@@ -67,15 +69,20 @@
   <p class="login-sub" id="form-title">Logga in för att fortsätta</p>
 
   <div class="login-error" id="error-msg"></div>
+  <div class="login-success" id="success-msg"></div>
 
   <form onsubmit="handleSubmit(event)">
+    <div class="field" id="name-field" style="display:none;">
+      <label for="name">Namn</label>
+      <input type="text" id="name" placeholder="Ditt namn">
+    </div>
     <div class="field">
       <label for="email">E-post</label>
       <input type="email" id="email" placeholder="namn@sssb.se" required autocomplete="email">
     </div>
     <div class="field">
       <label for="password">Lösenord</label>
-      <input type="password" id="password" placeholder="Minst 6 tecken" required autocomplete="current-password">
+      <input type="password" id="password" placeholder="Ditt lösenord" required>
     </div>
     <button type="submit" class="btn-primary" id="submit-btn">Logga in</button>
   </form>
@@ -84,100 +91,106 @@
     Första gången? <a onclick="toggleMode()">Skapa konto</a>
   </div>
 
-  <div class="login-info">
-    Begränsad till @sssb.se-konton
-  </div>
+  <div class="login-footer">Begränsad till @sssb.se-konton</div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const SUPABASE_URL = 'https://kndadtevenphkiotunlc.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtuZGFkdGV2ZW5waGtpb3R1bmxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzMTEzMjAsImV4cCI6MjA5MTg4NzUyMH0.fTfFxbG7z1wjgqIa-jAnMqiHBlWG5KzTIPDE1Qh79gg';
-  const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
   let isSignUp = false;
 
   function toggleMode() {
     isSignUp = !isSignUp;
-    document.getElementById('form-title').textContent = isSignUp
-      ? 'Skapa ett konto'
-      : 'Logga in för att fortsätta';
+    document.getElementById('form-title').textContent = isSignUp ? 'Skapa ett konto' : 'Logga in för att fortsätta';
     document.getElementById('submit-btn').textContent = isSignUp ? 'Skapa konto' : 'Logga in';
+    document.getElementById('name-field').style.display = isSignUp ? '' : 'none';
     document.getElementById('toggle-area').innerHTML = isSignUp
       ? 'Har redan konto? <a onclick="toggleMode()">Logga in</a>'
       : 'Första gången? <a onclick="toggleMode()">Skapa konto</a>';
-    document.getElementById('password').autocomplete = isSignUp ? 'new-password' : 'current-password';
-    hideError();
+    hideMessages();
   }
 
   function showError(msg) {
     const el = document.getElementById('error-msg');
-    el.textContent = msg;
-    el.style.display = 'block';
+    el.textContent = msg; el.style.display = 'block';
+    document.getElementById('success-msg').style.display = 'none';
   }
-  function hideError() {
+  function showSuccess(msg) {
+    const el = document.getElementById('success-msg');
+    el.textContent = msg; el.style.display = 'block';
     document.getElementById('error-msg').style.display = 'none';
+  }
+  function hideMessages() {
+    document.getElementById('error-msg').style.display = 'none';
+    document.getElementById('success-msg').style.display = 'none';
+  }
+
+  // Simple hash function for passwords (not crypto-grade, but fine for this use case)
+  async function hashPassword(password) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(password + '_sssb_studio_salt');
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  function getUsers() {
+    try { return JSON.parse(localStorage.getItem('sssb_users') || '{}'); } catch { return {}; }
+  }
+  function saveUsers(users) {
+    localStorage.setItem('sssb_users', JSON.stringify(users));
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    hideError();
+    hideMessages();
 
     const email = document.getElementById('email').value.trim().toLowerCase();
     const password = document.getElementById('password').value;
+    const name = document.getElementById('name').value.trim();
 
-    // Only allow @sssb.se emails
     if (!email.endsWith('@sssb.se')) {
       showError('Bara @sssb.se-adresser kan använda SSSB Studio.');
       return;
     }
-
     if (password.length < 6) {
       showError('Lösenordet måste vara minst 6 tecken.');
       return;
     }
 
-    const btn = document.getElementById('submit-btn');
-    btn.disabled = true;
-    btn.textContent = isSignUp ? 'Skapar...' : 'Loggar in...';
+    const hash = await hashPassword(password);
+    const users = getUsers();
 
-    try {
-      let result;
-      if (isSignUp) {
-        result = await db.auth.signUp({ email, password });
-      } else {
-        result = await db.auth.signInWithPassword({ email, password });
-      }
-
-      if (result.error) {
-        const msg = result.error.message;
-        if (msg.includes('Invalid login')) {
-          showError('Fel e-post eller lösenord.');
-        } else if (msg.includes('already registered')) {
-          showError('Kontot finns redan. Logga in istället.');
-        } else if (msg.includes('Email not confirmed')) {
-          showError('Kolla din e-post för att bekräfta kontot.');
-        } else {
-          showError(msg);
-        }
+    if (isSignUp) {
+      if (users[email]) {
+        showError('Kontot finns redan. Logga in istället.');
         return;
       }
+      if (!name) {
+        showError('Skriv ditt namn.');
+        return;
+      }
+      users[email] = { name, hash, created: new Date().toISOString() };
+      saveUsers(users);
+      showSuccess('Konto skapat! Du loggas in...');
+      localStorage.setItem('sssb_session', JSON.stringify({ email, name }));
+      setTimeout(() => { window.location.href = 'index.html'; }, 800);
 
-      // Success — redirect to main page
+    } else {
+      const user = users[email];
+      if (!user) {
+        showError('Inget konto med den adressen. Skapa konto först.');
+        return;
+      }
+      if (user.hash !== hash) {
+        showError('Fel lösenord.');
+        return;
+      }
+      localStorage.setItem('sssb_session', JSON.stringify({ email, name: user.name }));
       window.location.href = 'index.html';
-
-    } catch (err) {
-      showError('Något gick fel. Försök igen.');
-    } finally {
-      btn.disabled = false;
-      btn.textContent = isSignUp ? 'Skapa konto' : 'Logga in';
     }
   }
 
   // If already logged in, redirect
-  db.auth.getSession().then(({ data }) => {
-    if (data.session) window.location.href = 'index.html';
-  });
+  const session = localStorage.getItem('sssb_session');
+  if (session) window.location.href = 'index.html';
 </script>
 
 </body>
