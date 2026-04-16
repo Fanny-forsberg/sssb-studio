@@ -1,0 +1,346 @@
+/* ─── PUBLICERINGSPLAN ────────────────────────────────── */
+
+/* ─── TOOLBAR ────────────────────────────────────────── */
+.plan-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.filter-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.filter-btn {
+  background: var(--cream);
+  border: 2px solid var(--border-dark);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tan);
+  cursor: pointer;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  transition: all .15s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.filter-btn:hover { border-color: var(--brown); color: var(--brown); }
+.filter-btn.active { background: var(--brown); border-color: var(--brown); color: var(--cream); }
+
+/* ─── MONTH BLOCK ────────────────────────────────────── */
+.month-block { margin-bottom: 32px; }
+.month-header {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--brown);
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--brown);
+  margin-bottom: 8px;
+}
+
+/* ─── PLAN ROW ───────────────────────────────────────── */
+.plan-rows { display: flex; flex-direction: column; gap: 4px; }
+
+.plan-row {
+  display: grid;
+  grid-template-columns: 100px 100px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  background: var(--white);
+  border: 1px solid var(--border);
+  transition: all .15s;
+}
+.plan-row:hover { border-color: var(--brown); box-shadow: var(--shadow-sm); }
+.plan-row.published {
+  border-left: 4px solid var(--green);
+  background: #F0F8F0;
+}
+.plan-row.ideer { opacity: .6; font-style: italic; }
+
+.row-date {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--tan);
+  white-space: nowrap;
+}
+.row-channel { white-space: nowrap; }
+.ch-tag {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  padding: 3px 10px;
+  border-radius: 100px;
+  display: inline-block;
+}
+.ch-tag.instagram { background: #FFF0F6; color: #C0255C; }
+.ch-tag.tiktok    { background: #F0F0F0; color: #161823; }
+.ch-tag.linkedin  { background: #E8F3FB; color: #0062A0; }
+
+.row-content {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--brown);
+}
+
+.row-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+/* ─── PUBLISHED BADGE ────────────────────────────────── */
+.pub-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--green);
+}
+.pub-badge .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22C55E;
+}
+.pub-badge a {
+  color: var(--red);
+  text-decoration: underline;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 11px;
+}
+
+.waiting-badge {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--tan-light);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* ─── STATUS BAR ─────────────────────────────────────── */
+.pub-stats {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  padding: 16px 22px;
+  background: var(--white);
+  border: 2px solid var(--brown);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.pub-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.pub-stat-num {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+}
+.pub-stat-num.green { color: var(--green); }
+.pub-stat-num.brown { color: var(--brown); }
+.pub-stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tan);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* ─── LIVE INDICATOR ─────────────────────────────────── */
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22C55E;
+  display: inline-block;
+  animation: livePulse 2s ease-in-out infinite;
+}
+@keyframes livePulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+/* ─── MODAL ──────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(44,26,10,.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+.modal-box {
+  background: var(--white);
+  border: 2px solid var(--brown);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 440px;
+}
+.modal-box h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--brown);
+  margin-bottom: 16px;
+}
+.modal-box select {
+  width: 100%;
+  border: 2px solid var(--border-dark);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--brown);
+  background: var(--cream);
+  cursor: pointer;
+}
+
+/* ─── FEED CARDS ─────────────────────────────────────── */
+.feed-card {
+  background: var(--white);
+  border: 2px solid var(--brown);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: box-shadow .15s, transform .15s;
+}
+.feed-card:hover {
+  box-shadow: var(--shadow);
+  transform: translate(-1px, -1px);
+}
+
+.feed-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 2px solid var(--border);
+}
+.feed-card.instagram .feed-card-header { border-bottom-color: #E1306C; }
+.feed-card.tiktok    .feed-card-header { border-bottom-color: #161823; }
+.feed-card.linkedin  .feed-card-header { border-bottom-color: #0077B5; }
+
+.feed-platform-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.feed-platform-icon svg { width: 17px; height: 17px; }
+.feed-card.instagram .feed-platform-icon { background: #FFF0F6; color: #C0255C; }
+.feed-card.tiktok    .feed-platform-icon { background: #F0F0F0; color: #161823; }
+.feed-card.linkedin  .feed-platform-icon { background: #E8F3FB; color: #0062A0; }
+
+.feed-card-meta {
+  flex: 1;
+  min-width: 0;
+}
+.feed-card-platform {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.feed-card.instagram .feed-card-platform { color: #C0255C; }
+.feed-card.tiktok    .feed-card-platform { color: #161823; }
+.feed-card.linkedin  .feed-card-platform { color: #0062A0; }
+
+.feed-card-date {
+  font-size: 11px;
+  color: var(--tan);
+}
+.feed-card-link {
+  flex-shrink: 0;
+}
+.feed-card-link a {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--red);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  padding: 6px 14px;
+  border: 1.5px solid var(--red);
+  border-radius: var(--radius);
+  transition: all .15s;
+}
+.feed-card-link a:hover {
+  background: var(--red);
+  color: var(--cream);
+}
+
+.feed-card-body {
+  padding: 16px 20px;
+}
+.feed-card-text {
+  font-size: 14px;
+  color: var(--brown);
+  line-height: 1.65;
+  white-space: pre-wrap;
+  max-height: 120px;
+  overflow: hidden;
+  position: relative;
+}
+.feed-card-text.expanded {
+  max-height: none;
+}
+.feed-card-text:not(.expanded)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(transparent, var(--white));
+}
+.feed-expand-btn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--red);
+  cursor: pointer;
+  padding: 6px 0 0;
+  font-family: inherit;
+}
+.feed-card-empty {
+  font-size: 14px;
+  color: var(--tan);
+  text-align: center;
+  padding: 40px 20px;
+  background: var(--white);
+  border: 2px dashed var(--border-dark);
+  border-radius: var(--radius-lg);
+}
+
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 700px) {
+  .plan-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .pub-stats { flex-wrap: wrap; gap: 16px; }
+}

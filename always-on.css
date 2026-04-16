@@ -1,0 +1,268 @@
+/* ─── ALWAYS ON PAGE ─────────────────────────────────── */
+
+/* ─── SECTION HEADINGS ────────────────────────────────── */
+.section-heading {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  color: var(--brown);
+  margin-bottom: 6px;
+}
+.section-sub {
+  font-size: 13px;
+  color: var(--tan);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  margin-bottom: 24px;
+}
+
+/* ─── CAMPAIGNS GRID ──────────────────────────────────── */
+.campaigns-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 56px;
+}
+
+.campaign-card {
+  background: var(--white);
+  border: 2px solid var(--brown);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform .15s, box-shadow .15s;
+}
+.campaign-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--brown);
+}
+
+.campaign-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 2px solid var(--brown);
+  background: var(--cream-dark);
+}
+
+.campaign-name {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 900;
+  font-size: 17px;
+  color: var(--brown);
+  letter-spacing: -.3px;
+}
+
+.status-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  padding: 4px 12px;
+  border-radius: 100px;
+  border: 1.5px solid currentColor;
+}
+.status-badge.active {
+  color: var(--green);
+  background: var(--green-light);
+  border-color: var(--green);
+}
+.status-badge.paused {
+  color: var(--tan);
+  background: var(--cream);
+  border-color: var(--border-dark);
+}
+
+.campaign-card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.campaign-meta-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.campaign-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.campaign-meta-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--tan);
+}
+.campaign-meta-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brown);
+  line-height: 1.4;
+}
+
+.platform-pills {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.platform-pill {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  padding: 3px 10px;
+  border-radius: 100px;
+  border: 1.5px solid currentColor;
+}
+.platform-pill.instagram { color: #C0255C; background: #FFF0F6; border-color: #C0255C; }
+.platform-pill.tiktok    { color: var(--white); background: var(--brown); border-color: var(--brown); }
+.platform-pill.linkedin  { color: #0062A0; background: #E8F3FB; border-color: #0077B5; }
+.platform-pill.google    { color: #1A73E8; background: #EAF2FF; border-color: #1A73E8; }
+
+/* ─── CAMPAIGN GOAL STRIPE ────────────────────────────── */
+.campaign-goal {
+  background: var(--cream);
+  border: 1.5px solid var(--border-dark);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--brown-mid);
+  line-height: 1.5;
+}
+.campaign-goal strong {
+  color: var(--red);
+  font-weight: 700;
+}
+
+/* ─── FORMATS TABLE SECTION ───────────────────────────── */
+.formats-section {
+  margin-bottom: 56px;
+}
+
+.formats-table-wrap {
+  background: var(--white);
+  border: 2px solid var(--brown);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.formats-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.formats-table thead tr {
+  background: var(--brown);
+}
+.formats-table thead th {
+  color: var(--cream);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  padding: 13px 20px;
+  text-align: left;
+}
+.formats-table tbody tr {
+  border-bottom: 1.5px solid var(--border);
+  transition: background .12s;
+}
+.formats-table tbody tr:last-child { border-bottom: none; }
+.formats-table tbody tr:hover { background: var(--cream); }
+.formats-table tbody td {
+  padding: 14px 20px;
+  color: var(--brown);
+  vertical-align: middle;
+}
+.formats-table tbody td:first-child { font-weight: 600; }
+
+.table-status {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  padding: 3px 10px;
+  border-radius: 100px;
+  border: 1.5px solid currentColor;
+  display: inline-block;
+}
+.table-status.active  { color: var(--green); background: var(--green-light); border-color: var(--green); }
+.table-status.paused  { color: var(--tan); background: var(--cream); border-color: var(--border-dark); }
+
+/* ─── NOTES SECTION ───────────────────────────────────── */
+.notes-section {
+  margin-bottom: 56px;
+}
+
+.notes-card {
+  background: var(--white);
+  border: 2px solid var(--brown);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.notes-card textarea {
+  min-height: 140px;
+  font-size: 14px;
+  line-height: 1.7;
+  resize: vertical;
+}
+
+.notes-footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.notes-save-msg {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  opacity: 0;
+  transition: opacity .3s;
+}
+.notes-save-msg.visible { opacity: 1; }
+
+/* ─── ACTIVE INDICATOR ────────────────────────────────── */
+.always-on-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--red);
+  color: var(--cream);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  padding: 5px 14px;
+  border-radius: 100px;
+  border: 2px solid var(--brown);
+  margin-bottom: 20px;
+}
+.always-on-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--yellow);
+  animation: blink 1.4s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+
+/* ─── RESPONSIVE ──────────────────────────────────────── */
+@media (max-width: 700px) {
+  .campaigns-grid { grid-template-columns: 1fr; }
+  .campaign-meta-row { grid-template-columns: 1fr; }
+}

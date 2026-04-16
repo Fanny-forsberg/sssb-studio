@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kopplingar — SSSB Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="kopplingar.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">SSSB <span>Studio</span></div>
+    <nav class="header-nav">
+      <a href="index.html">Caption-hjälp</a>
+      <a href="kalender.html">Kalenderöversikt</a>
+      <a href="schema.html">Schema</a>
+      <a href="publicering.html">Publiceringsplan</a>
+      <a href="always-on.html">Always On</a>
+      <a href="kpier.html">KPIer</a>
+      <a href="kopplingar.html" class="active">Kopplingar</a>
+      <a href="ideer.html">Idéer</a>
+      <a href="logg.html">Logg</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <h1>Kopplingar</h1>
+    <p>Koppla SSSB:s sociala medier-konton till Studio for att hämta statistik automatiskt.</p>
+  </section>
+
+  <!-- Status banner (visas efter OAuth-redirect) -->
+  <div id="status-banner" class="status-banner" style="display:none;"></div>
+
+  <!-- Connections -->
+  <div class="connections-grid">
+
+    <!-- INSTAGRAM -->
+    <div class="connection-card instagram" id="card-instagram">
+      <div class="connection-card-inner">
+        <div class="connection-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </div>
+        <div class="connection-info">
+          <div class="connection-name">Instagram</div>
+          <div class="connection-handle" id="ig-handle">Ej kopplad</div>
+          <div class="connection-status disconnected" id="ig-status">
+            <span class="dot"></span> Ej kopplad
+          </div>
+        </div>
+        <div class="connection-actions" id="ig-actions">
+          <a href="/api/auth-instagram" class="btn-primary">Koppla Instagram</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIKTOK -->
+    <div class="connection-card tiktok" id="card-tiktok">
+      <div class="connection-card-inner">
+        <div class="connection-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.17 8.17 0 004.79 1.52V6.79a4.85 4.85 0 01-1.02-.1z"/></svg>
+        </div>
+        <div class="connection-info">
+          <div class="connection-name">TikTok</div>
+          <div class="connection-handle" id="tt-handle">Ej kopplad</div>
+          <div class="connection-status disconnected" id="tt-status">
+            <span class="dot"></span> Ej kopplad
+          </div>
+        </div>
+        <div class="connection-actions" id="tt-actions">
+          <a href="/api/auth-tiktok" class="btn-primary">Koppla TikTok</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- LINKEDIN -->
+    <div class="connection-card linkedin" id="card-linkedin">
+      <div class="connection-card-inner">
+        <div class="connection-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </div>
+        <div class="connection-info">
+          <div class="connection-name">LinkedIn</div>
+          <div class="connection-handle" id="li-handle">Ej kopplad</div>
+          <div class="connection-status disconnected" id="li-status">
+            <span class="dot"></span> Ej kopplad
+          </div>
+        </div>
+        <div class="connection-actions" id="li-actions">
+          <a href="/api/auth-linkedin" class="btn-primary">Koppla LinkedIn</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SETUP GUIDE -->
+  <section class="setup-section">
+    <h2>Hur du sätter upp kopplingarna</h2>
+    <p>Varje plattform kräver en utvecklar-app. Följ stegen nedan.</p>
+
+    <div class="setup-steps">
+      <div class="setup-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Skapa utvecklar-appar</h3>
+          <p>
+            <strong>Instagram/Meta:</strong> Gå till developers.facebook.com, skapa en app av typen "Business", lägg till "Instagram Graph API".<br>
+            <strong>TikTok:</strong> Gå till developers.tiktok.com, skapa en app under "Login Kit".<br>
+            <strong>LinkedIn:</strong> Gå till linkedin.com/developers, skapa en ny app kopplad till SSSB:s företagssida.
+          </p>
+        </div>
+      </div>
+
+      <div class="setup-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Lägg till redirect-URLer</h3>
+          <p>
+            I varje utvecklar-app, lägg till dessa som godkända redirect-URLer:
+          </p>
+          <table class="env-table" style="margin-top:8px;">
+            <tr><th>Plattform</th><th>Redirect URI</th></tr>
+            <tr><td>Meta/Instagram</td><td><code id="redirect-ig"></code></td></tr>
+            <tr><td>TikTok</td><td><code id="redirect-tt"></code></td></tr>
+            <tr><td>LinkedIn</td><td><code id="redirect-li"></code></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="setup-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Lägg till miljövariabler i Vercel</h3>
+          <p>Gå till Vercel-projektets Settings > Environment Variables och lägg till:</p>
+          <table class="env-table">
+            <tr><th>Variabel</th><th>Beskrivning</th></tr>
+            <tr><td>META_APP_ID</td><td>App ID från Meta Developer Dashboard</td></tr>
+            <tr><td>META_APP_SECRET</td><td>App Secret från Meta Developer Dashboard</td></tr>
+            <tr><td>TIKTOK_CLIENT_KEY</td><td>Client Key från TikTok Developer Portal</td></tr>
+            <tr><td>TIKTOK_CLIENT_SECRET</td><td>Client Secret från TikTok Developer Portal</td></tr>
+            <tr><td>LINKEDIN_CLIENT_ID</td><td>Client ID från LinkedIn Developer</td></tr>
+            <tr><td>LINKEDIN_CLIENT_SECRET</td><td>Client Secret från LinkedIn Developer</td></tr>
+            <tr><td>SUPABASE_URL</td><td>Din Supabase-URL (redan konfigurerad?)</td></tr>
+            <tr><td>SUPABASE_SERVICE_KEY</td><td>Supabase service_role key (EJ anon key)</td></tr>
+            <tr><td>BASE_URL</td><td>Din Vercel-URL, t.ex. <code>https://sssb-studio.vercel.app</code></td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="setup-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>Skapa Supabase-tabell</h3>
+          <p>Kör denna SQL i Supabase SQL Editor:</p>
+          <pre style="background:var(--cream-dark);border:2px solid var(--border-dark);border-radius:var(--radius);padding:14px;font-size:12px;overflow-x:auto;margin-top:8px;line-height:1.6;">CREATE TABLE social_connections (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  platform TEXT UNIQUE NOT NULL,
+  access_token TEXT NOT NULL,
+  refresh_token TEXT DEFAULT '',
+  platform_account_id TEXT DEFAULT '',
+  account_name TEXT DEFAULT '',
+  extra JSONB DEFAULT '{}',
+  connected_at TIMESTAMPTZ DEFAULT now()
+);
+
+-- Row Level Security
+ALTER TABLE social_connections ENABLE ROW LEVEL SECURITY;
+
+-- Allow service role full access
+CREATE POLICY "Service role access"
+  ON social_connections FOR ALL
+  USING (true) WITH CHECK (true);</pre>
+        </div>
+      </div>
+
+      <div class="setup-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h3>Deploya och testa</h3>
+          <p>Pusha koden till GitHub, vänta på att Vercel bygger om, och klicka sedan på "Koppla"-knapparna ovan. Du redirectas till varje plattform för att logga in.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Fill in redirect URIs based on current domain
+  const base = window.location.origin;
+  document.getElementById('redirect-ig').textContent = `${base}/api/callback-instagram`;
+  document.getElementById('redirect-tt').textContent = `${base}/api/callback-tiktok`;
+  document.getElementById('redirect-li').textContent = `${base}/api/callback-linkedin`;
+
+  // Show status banner from URL params
+  const params = new URLSearchParams(window.location.search);
+  const success = params.get('success');
+  const error = params.get('error');
+
+  if (success || error) {
+    const banner = document.getElementById('status-banner');
+    banner.style.display = 'block';
+    if (success) {
+      const names = { instagram: 'Instagram', tiktok: 'TikTok', linkedin: 'LinkedIn' };
+      banner.className = 'status-banner success';
+      banner.textContent = `${names[success] || success} kopplades!`;
+    } else {
+      banner.className = 'status-banner error';
+      const msgs = {
+        instagram_denied: 'Instagram-koppling avbröts.',
+        instagram_token: 'Kunde inte hämta Instagram-token.',
+        instagram_fail: 'Något gick fel med Instagram.',
+        tiktok_denied: 'TikTok-koppling avbröts.',
+        tiktok_token: 'Kunde inte hämta TikTok-token.',
+        tiktok_fail: 'Något gick fel med TikTok.',
+        linkedin_denied: 'LinkedIn-koppling avbröts.',
+        linkedin_token: 'Kunde inte hämta LinkedIn-token.',
+        linkedin_fail: 'Något gick fel med LinkedIn.',
+      };
+      banner.textContent = msgs[error] || 'Ett fel uppstod.';
+    }
+    // Clean URL
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+
+  // Load connection status
+  async function loadConnections() {
+    try {
+      const res = await fetch('/api/connections');
+      if (!res.ok) return;
+      const { connections } = await res.json();
+
+      updateCard('instagram', 'ig', connections.instagram);
+      updateCard('tiktok', 'tt', connections.tiktok);
+      updateCard('linkedin', 'li', connections.linkedin);
+    } catch (e) {
+      // API not available yet (local dev or not deployed)
+    }
+  }
+
+  function updateCard(platform, prefix, data) {
+    const handle = document.getElementById(`${prefix}-handle`);
+    const status = document.getElementById(`${prefix}-status`);
+    const actions = document.getElementById(`${prefix}-actions`);
+
+    if (data && data.connected) {
+      handle.textContent = data.account_name + (data.followers ? ` · ${data.followers.toLocaleString('sv-SE')} följare` : '');
+      status.className = 'connection-status connected';
+      status.innerHTML = '<span class="dot"></span> Kopplad';
+      if (data.connected_at) {
+        const date = new Date(data.connected_at).toLocaleDateString('sv-SE', { day: 'numeric', month: 'short', year: 'numeric' });
+        status.innerHTML += ` sedan ${date}`;
+      }
+      actions.innerHTML = `
+        <a href="/api/auth-${platform}" class="btn-secondary">Koppla om</a>
+        <button class="btn-secondary" onclick="disconnect('${platform}')" style="color:var(--red);border-color:var(--red);">Koppla bort</button>
+      `;
+    }
+  }
+
+  async function disconnect(platform) {
+    if (!confirm(`Vill du koppla bort ${platform}?`)) return;
+    try {
+      await fetch(`/api/connections?platform=${platform}`, { method: 'DELETE' });
+      window.location.reload();
+    } catch (e) {
+      alert('Kunde inte koppla bort. Försök igen.');
+    }
+  }
+
+  loadConnections();
+</script>
+
+</body>
+</html>

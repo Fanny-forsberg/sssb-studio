@@ -1,0 +1,214 @@
+/* ─── CONNECTIONS PAGE ────────────────────────────────── */
+
+.connections-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.connection-card {
+  background: var(--white);
+  border: 2px solid var(--brown);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: box-shadow .15s, transform .15s;
+}
+.connection-card:hover {
+  box-shadow: var(--shadow);
+  transform: translate(-1px, -1px);
+}
+
+.connection-card-inner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 24px;
+}
+
+.connection-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 2px solid var(--brown);
+}
+.connection-icon svg { width: 24px; height: 24px; }
+.connection-card.instagram .connection-icon { background: #FFF0F6; color: #C0255C; }
+.connection-card.tiktok    .connection-icon { background: var(--brown); color: var(--cream); }
+.connection-card.linkedin  .connection-icon { background: #E8F3FB; color: #0062A0; }
+
+.connection-info {
+  flex: 1;
+  min-width: 0;
+}
+.connection-name {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--brown);
+  margin-bottom: 2px;
+}
+.connection-handle {
+  font-size: 13px;
+  color: var(--muted, var(--tan));
+}
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+.connection-status .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.connection-status.connected .dot { background: #22C55E; }
+.connection-status.connected { color: var(--green); }
+.connection-status.disconnected .dot { background: var(--tan-light); }
+.connection-status.disconnected { color: var(--tan); }
+
+.connection-actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* ─── STATUS BANNER ──────────────────────────────────── */
+.status-banner {
+  padding: 14px 20px;
+  border-radius: var(--radius-lg);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  border: 2px solid;
+}
+.status-banner.success {
+  background: var(--green-light);
+  border-color: var(--green);
+  color: var(--green);
+}
+.status-banner.error {
+  background: #FEF2F2;
+  border-color: var(--red);
+  color: var(--red);
+}
+
+/* ─── SETUP GUIDE ────────────────────────────────────── */
+.setup-section {
+  margin-bottom: 48px;
+}
+.setup-section h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -.5px;
+  color: var(--brown);
+  margin-bottom: 8px;
+}
+.setup-section > p {
+  font-size: 13.5px;
+  color: var(--tan);
+  margin-bottom: 20px;
+}
+
+.setup-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.setup-step {
+  background: var(--white);
+  border: 2px solid var(--border-dark);
+  border-radius: var(--radius-lg);
+  padding: 18px 22px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.step-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--brown);
+  color: var(--cream);
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 900;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.step-content h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--brown);
+  margin-bottom: 4px;
+}
+.step-content p {
+  font-size: 13px;
+  color: var(--tan);
+  line-height: 1.6;
+}
+.step-content code {
+  font-size: 12px;
+  background: var(--cream-dark);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'SF Mono', monospace;
+  color: var(--brown);
+}
+
+/* ─── ENV TABLE ──────────────────────────────────────── */
+.env-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 13px;
+}
+.env-table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--tan);
+  padding: 8px 12px;
+  border-bottom: 2px solid var(--border-dark);
+}
+.env-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--brown-mid);
+}
+.env-table td:first-child {
+  font-family: 'SF Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--brown);
+}
+
+@media (max-width: 600px) {
+  .connection-card-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .connection-actions {
+    width: 100%;
+  }
+  .connection-actions .btn-primary,
+  .connection-actions .btn-secondary {
+    flex: 1;
+    text-align: center;
+  }
+}

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KPIer — SSSB Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="kalender.css">
+  <link rel="stylesheet" href="kpier.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">SSSB <span>Studio</span></div>
+    <nav class="header-nav">
+      <a href="index.html">Caption-hjälp</a>
+      <a href="kalender.html">Kalenderöversikt</a>
+      <a href="schema.html">Schema</a>
+      <a href="publicering.html">Publiceringsplan</a>
+      <a href="always-on.html">Always On</a>
+      <a href="kpier.html" class="active">KPIer</a>
+      <a href="kopplingar.html">Kopplingar</a>
+      <a href="ideer.html">Idéer</a>
+      <a href="logg.html">Logg</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>KPIer</h1>
+    <p>Följ upp månadssiffror per kanal — jämför utfall mot årets mål för 2026.</p>
+  </section>
+
+  <!-- MONTH PICKER -->
+  <div class="month-picker-row">
+    <label for="month-select">Välj månad</label>
+    <input type="month" id="month-select" value="2026-04">
+    <button class="btn-secondary" onclick="loadMonth()">Ladda</button>
+    <span id="global-save-status" class="save-status-msg"></span>
+  </div>
+
+  <!-- MÅL 2026 OVERVIEW -->
+  <section class="goals-section">
+    <h2 class="section-heading">Mål 2026</h2>
+    <p class="section-sub">Årsöversikt · Alla kanaler</p>
+    <div class="goals-overview-grid">
+
+      <div class="goals-overview-card instagram">
+        <div class="goals-overview-card-header">Instagram</div>
+        <div class="goals-list">
+          <div class="goals-list-item">
+            <span class="goals-list-metric">Följare</span>
+            <span class="goals-list-value">8 000</span>
+          </div>
+          <div class="goals-list-item">
+            <span class="goals-list-metric">Räckvidd/inlägg</span>
+            <span class="goals-list-value">2 500</span>
+          </div>
+          <div class="goals-list-item">
+            <span class="goals-list-metric">Engagemangsgrad</span>
+            <span class="goals-list-value">4 %</span>
+          </div>
+          <div class="goals-list-item">
+            <span class="goals-list-metric">Länkklick/månad</span>
+            <span class="goals-list-value">300</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="goals-overview-card tiktok">
+        <div class="goals-overview-card-header">TikTok</div>
+        <div class="goals-list">
+          <div class="goals-list-item">
+            <span class="goals-list-metric">Följare</span>
+            <span class="goals-list-value">1 500</span>
+          </div>
+          <div class="goals-list-item">
+            <span class="goals-list-metric">Visningar/video</span>
+            <span class="goals-list-value">3 000</span>
+          </div>
+          <div class="goals-list-item">
+            <span class="goals-list-metric">Gilla-markeringar</span>
+            <span class="goals-list-value">25 000</span>
+          </div>
+          <div class="goals-list-item">
+            <span class="goals-list-metric">Delningar/månad</span>
+            <span class="goals-list-value">150</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="goals-overview-card linkedin">
+        <div class="goals-overview-card-header">LinkedIn</div>
+        <div class="goals-list">
+          <div class="goals-list-item">
+            <span class="goals-list-metric">Följare</span>
+            <span class="goals-list-value">2 000</span>
+          </div>
+          <div class="goals-list-item">
+            <span class="goals-list-metric">Visningar/inlägg</span>
+            <span class="goals-list-value">800</span>
+          </div>
+          <div class="goals-list-item">
+            <span class="goals-list-metric">Engagemang</span>
+            <span class="goals-list-value">3 %</span>
+          </div>
+          <div class="goals-list-item">
+            <span class="goals-list-metric">Länkklick/månad</span>
+            <span class="goals-list-value">120</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INSTAGRAM -->
+  <section class="platform-section">
+    <div class="platform-header">
+      <div class="platform-icon-badge instagram">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </div>
+      <span class="platform-title">Instagram</span>
+    </div>
+
+    <div class="platform-card instagram">
+      <div class="platform-card-inner">
+
+        <div class="kpi-grid">
+          <div class="kpi-input-group">
+            <label for="ig-foljare">Följare <span class="goal-hint">mål: 8 000</span></label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="ig-foljare" placeholder="0">
+            </div>
+          </div>
+          <div class="kpi-input-group">
+            <label for="ig-rackvidd">Räckvidd/inlägg <span class="goal-hint">mål: 2 500</span></label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="ig-rackvidd" placeholder="0">
+            </div>
+          </div>
+          <div class="kpi-input-group">
+            <label for="ig-engagemang">Engagemangsgrad <span class="goal-hint">mål: 4%</span></label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="ig-engagemang" placeholder="0.0" step="0.1">
+              <span class="unit">%</span>
+            </div>
+          </div>
+          <div class="kpi-input-group">
+            <label for="ig-visningar">Visningar/månad</label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="ig-visningar" placeholder="0">
+            </div>
+          </div>
+          <div class="kpi-input-group">
+            <label for="ig-sparade">Sparade inlägg</label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="ig-sparade" placeholder="0">
+            </div>
+          </div>
+          <div class="kpi-input-group">
+            <label for="ig-klick">Länkklick <span class="goal-hint">mål: 300</span></label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="ig-klick" placeholder="0">
+            </div>
+          </div>
+        </div>
+
+        <div class="goal-row">
+          <span class="goal-row-label">Månadsm&aring;l</span>
+          <div class="goal-items">
+            <span class="goal-item">Följare <strong>+100</strong></span>
+            <span class="goal-item">Räckvidd <strong>2 500/inlägg</strong></span>
+            <span class="goal-item">Engagemang <strong>4%</strong></span>
+            <span class="goal-item">Länkklick <strong>300</strong></span>
+          </div>
+        </div>
+
+        <div class="platform-notes">
+          <label for="ig-notes">Anteckningar & analys</label>
+          <textarea id="ig-notes" placeholder="Vad gick bra? Vad ska justeras? Toppar, dalar, insikter..."></textarea>
+        </div>
+
+        <div class="platform-save-row">
+          <button class="btn-primary" onclick="savePlatform('instagram')">Spara Instagram</button>
+          <span id="ig-status" class="save-status-msg"></span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TIKTOK -->
+  <section class="platform-section">
+    <div class="platform-header">
+      <div class="platform-icon-badge tiktok">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.17 8.17 0 004.79 1.52V6.79a4.85 4.85 0 01-1.02-.1z"/></svg>
+      </div>
+      <span class="platform-title">TikTok</span>
+    </div>
+
+    <div class="platform-card tiktok">
+      <div class="platform-card-inner">
+
+        <div class="kpi-grid">
+          <div class="kpi-input-group">
+            <label for="tt-foljare">Följare <span class="goal-hint">mål: 1 500</span></label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="tt-foljare" placeholder="0">
+            </div>
+          </div>
+          <div class="kpi-input-group">
+            <label for="tt-visningar">Visningar/video <span class="goal-hint">mål: 3 000</span></label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="tt-visningar" placeholder="0">
+            </div>
+          </div>
+          <div class="kpi-input-group">
+            <label for="tt-likes">Gilla-markeringar <span class="goal-hint">mål: 25 000</span></label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="tt-likes" placeholder="0">
+            </div>
+          </div>
+          <div class="kpi-input-group">
+            <label for="tt-delningar">Delningar <span class="goal-hint">mål: 150</span></label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="tt-delningar" placeholder="0">
+            </div>
+          </div>
+          <div class="kpi-input-group">
+            <label for="tt-kommentarer">Kommentarer</label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="tt-kommentarer" placeholder="0">
+            </div>
+          </div>
+          <div class="kpi-input-group">
+            <label for="tt-fardigt">Tittade klart</label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="tt-fardigt" placeholder="0">
+              <span class="unit">%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="goal-row">
+          <span class="goal-row-label">Månadsm&aring;l</span>
+          <div class="goal-items">
+            <span class="goal-item">Följare <strong>+70</strong></span>
+            <span class="goal-item">Visningar <strong>3 000/video</strong></span>
+            <span class="goal-item">Likes total <strong>25 000</strong></span>
+            <span class="goal-item">Delningar <strong>150</strong></span>
+          </div>
+        </div>
+
+        <div class="platform-notes">
+          <label for="tt-notes">Anteckningar & analys</label>
+          <textarea id="tt-notes" placeholder="Vilka videor gick bäst? Hooks som funkar? Trender att följa..."></textarea>
+        </div>
+
+        <div class="platform-save-row">
+          <button class="btn-primary" onclick="savePlatform('tiktok')">Spara TikTok</button>
+          <span id="tt-status" class="save-status-msg"></span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- LINKEDIN -->
+  <section class="platform-section">
+    <div class="platform-header">
+      <div class="platform-icon-badge linkedin">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </div>
+      <span class="platform-title">LinkedIn</span>
+    </div>
+
+    <div class="platform-card linkedin">
+      <div class="platform-card-inner">
+
+        <div class="kpi-grid">
+          <div class="kpi-input-group">
+            <label for="li-foljare">Följare <span class="goal-hint">mål: 2 000</span></label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="li-foljare" placeholder="0">
+            </div>
+          </div>
+          <div class="kpi-input-group">
+            <label for="li-visningar">Visningar/inlägg <span class="goal-hint">mål: 800</span></label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="li-visningar" placeholder="0">
+            </div>
+          </div>
+          <div class="kpi-input-group">
+            <label for="li-engagemang">Engagemang <span class="goal-hint">mål: 3%</span></label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="li-engagemang" placeholder="0.0" step="0.1">
+              <span class="unit">%</span>
+            </div>
+          </div>
+          <div class="kpi-input-group">
+            <label for="li-klick">Länkklick <span class="goal-hint">mål: 120</span></label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="li-klick" placeholder="0">
+            </div>
+          </div>
+          <div class="kpi-input-group">
+            <label for="li-reaktioner">Reaktioner</label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="li-reaktioner" placeholder="0">
+            </div>
+          </div>
+          <div class="kpi-input-group">
+            <label for="li-delningar">Delningar</label>
+            <div class="kpi-input-wrap">
+              <input type="number" id="li-delningar" placeholder="0">
+            </div>
+          </div>
+        </div>
+
+        <div class="goal-row">
+          <span class="goal-row-label">Månadsm&aring;l</span>
+          <div class="goal-items">
+            <span class="goal-item">Följare <strong>+50</strong></span>
+            <span class="goal-item">Visningar <strong>800/inlägg</strong></span>
+            <span class="goal-item">Engagemang <strong>3%</strong></span>
+            <span class="goal-item">Länkklick <strong>120</strong></span>
+          </div>
+        </div>
+
+        <div class="platform-notes">
+          <label for="li-notes">Anteckningar & analys</label>
+          <textarea id="li-notes" placeholder="Vilka ämnen engagerar? Employer brand-insikter? Rekryteringsposter?"></textarea>
+        </div>
+
+        <div class="platform-save-row">
+          <button class="btn-primary" onclick="savePlatform('linkedin')">Spara LinkedIn</button>
+          <span id="li-status" class="save-status-msg"></span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  const FIELDS = {
+    instagram: ['ig-foljare','ig-rackvidd','ig-engagemang','ig-visningar','ig-sparade','ig-klick','ig-notes'],
+    tiktok:    ['tt-foljare','tt-visningar','tt-likes','tt-delningar','tt-kommentarer','tt-fardigt','tt-notes'],
+    linkedin:  ['li-foljare','li-visningar','li-engagemang','li-klick','li-reaktioner','li-delningar','li-notes']
+  };
+  const PREFIX_MAP = { instagram: 'ig', tiktok: 'tt', linkedin: 'li' };
+
+  function getMonth() {
+    return document.getElementById('month-select').value || '2026-04';
+  }
+
+  function storageKey(platform) {
+    return `kpi_${getMonth()}_${platform}`;
+  }
+
+  function loadMonth() {
+    const month = getMonth();
+    Object.keys(FIELDS).forEach(platform => {
+      const saved = localStorage.getItem(storageKey(platform));
+      if (saved) {
+        try {
+          const data = JSON.parse(saved);
+          FIELDS[platform].forEach(id => {
+            const el = document.getElementById(id);
+            if (el && data[id] !== undefined) el.value = data[id];
+          });
+        } catch(e) {}
+      } else {
+        FIELDS[platform].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = '';
+        });
+      }
+    });
+    showStatus('global-save-status', `Laddade ${month}`, 'success');
+  }
+
+  function savePlatform(platform) {
+    const prefix = PREFIX_MAP[platform];
+    const data = {};
+    FIELDS[platform].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) data[id] = el.value;
+    });
+    localStorage.setItem(storageKey(platform), JSON.stringify(data));
+    const statusId = `${prefix}-status`;
+    showStatus(statusId, 'Sparat!', 'success');
+  }
+
+  function showStatus(id, msg, type) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = msg;
+    el.className = `save-status-msg ${type} visible`;
+    setTimeout(() => el.classList.remove('visible'), 2500);
+  }
+
+  // Auto-load current month on page load
+  loadMonth();
+</script>
+
+</body>
+</html>

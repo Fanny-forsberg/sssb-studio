@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publiceringslogg — SSSB Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="logg.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">SSSB <span>Studio</span></div>
+    <nav class="header-nav">
+      <a href="index.html">Caption-hjälp</a>
+      <a href="kalender.html">Kalenderöversikt</a>
+      <a href="schema.html">Schema</a>
+      <a href="publicering.html">Publiceringsplan</a>
+      <a href="always-on.html">Always On</a>
+      <a href="kpier.html">KPIer</a>
+      <a href="kopplingar.html">Kopplingar</a>
+      <a href="ideer.html">Idéer</a>
+      <a href="logg.html" class="active">Logg</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <h1>Publicerings<em>logg</em></h1>
+    <p>Bocka av inlägg när de publicerats. Se vad som gått ut, vad som väntar och vad som är försenat.</p>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats-bar" id="stats-bar">
+    <div class="stat-card">
+      <div class="stat-num" id="stat-total">0</div>
+      <div class="stat-label">Planerade</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num green" id="stat-published">0</div>
+      <div class="stat-label">Publicerade</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num red" id="stat-late">0</div>
+      <div class="stat-label">Försenade</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num tan" id="stat-upcoming">0</div>
+      <div class="stat-label">Kommande</div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)">Alla</button>
+    <button class="filter-btn" data-filter="upcoming" onclick="setFilter('upcoming', this)">Kommande</button>
+    <button class="filter-btn" data-filter="late" onclick="setFilter('late', this)">Försenade</button>
+    <button class="filter-btn" data-filter="published" onclick="setFilter('published', this)">Publicerade</button>
+    <span style="width:1px;height:20px;background:var(--border-dark);margin:0 4px;"></span>
+    <button class="filter-btn instagram" data-filter="instagram" onclick="setFilter('instagram', this)">Instagram</button>
+    <button class="filter-btn tiktok" data-filter="tiktok" onclick="setFilter('tiktok', this)">TikTok</button>
+    <button class="filter-btn linkedin" data-filter="linkedin" onclick="setFilter('linkedin', this)">LinkedIn</button>
+  </div>
+
+  <!-- Post list -->
+  <div class="post-list" id="post-list"></div>
+
+  <!-- Unmatched webhook posts -->
+  <section id="unmatched-section" style="display:none;margin-top:40px;">
+    <h2 style="font-family:'Fraunces',Georgia,serif;font-size:24px;font-weight:900;color:var(--brown);margin-bottom:6px;">Omatchade inlägg</h2>
+    <p style="font-size:13px;color:var(--tan);margin-bottom:16px;">Dessa inlägg kom in via Zapier men kunde inte matchas automatiskt. Klicka för att koppla dem till ett planerat inlägg.</p>
+    <div id="unmatched-list" class="post-list"></div>
+  </section>
+
+  <!-- Zapier setup guide -->
+  <section style="margin-top:48px;margin-bottom:60px;">
+    <h2 style="font-family:'Fraunces',Georgia,serif;font-size:24px;font-weight:900;color:var(--brown);margin-bottom:6px;">Automatisk spårning via Zapier</h2>
+    <p style="font-size:13px;color:var(--tan);margin-bottom:16px;">Koppla Zapier så markeras inlägg automatiskt som publicerade.</p>
+    <div style="background:var(--white);border:2px solid var(--brown);border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow-sm);">
+      <p style="font-size:13px;color:var(--brown-mid);line-height:1.7;margin-bottom:14px;">
+        <strong>1.</strong> Gå till <a href="https://zapier.com" target="_blank" style="color:var(--red);">zapier.com</a> och skapa ett gratis konto.<br>
+        <strong>2.</strong> Skapa en ny Zap per kanal:
+      </p>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:14px;">
+        <tr style="border-bottom:2px solid var(--border-dark);">
+          <th style="text-align:left;padding:8px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--tan);">Trigger</th>
+          <th style="text-align:left;padding:8px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--tan);">Action</th>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:8px 12px;color:var(--brown-mid);">Instagram — New Media Posted</td>
+          <td style="padding:8px 12px;color:var(--brown-mid);">Webhooks by Zapier — POST</td>
+        </tr>
+        <tr style="border-bottom:1px solid var(--border);">
+          <td style="padding:8px 12px;color:var(--brown-mid);">TikTok — New Video</td>
+          <td style="padding:8px 12px;color:var(--brown-mid);">Webhooks by Zapier — POST</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 12px;color:var(--brown-mid);">LinkedIn — New Share Update</td>
+          <td style="padding:8px 12px;color:var(--brown-mid);">Webhooks by Zapier — POST</td>
+        </tr>
+      </table>
+      <p style="font-size:13px;color:var(--brown-mid);line-height:1.7;margin-bottom:10px;">
+        <strong>3.</strong> I Webhook-action, sätt URL till:
+      </p>
+      <code id="webhook-url" style="display:block;background:var(--cream-dark);padding:10px 14px;border-radius:var(--radius);font-size:12px;font-family:'SF Mono',monospace;color:var(--brown);margin-bottom:10px;word-break:break-all;"></code>
+      <p style="font-size:13px;color:var(--brown-mid);line-height:1.7;">
+        <strong>4.</strong> Ställ in Body (JSON) i varje Zap med dessa fält:
+      </p>
+      <pre style="background:var(--cream-dark);padding:14px;border-radius:var(--radius);font-size:12px;line-height:1.6;overflow-x:auto;margin-top:8px;">{
+  "platform": "instagram",
+  "text": "{{Caption}}",
+  "link": "{{Permalink}}",
+  "published_at": "{{Timestamp}}"
+}</pre>
+      <p style="font-size:11px;color:var(--tan);margin-top:8px;">Byt <code>platform</code> till "tiktok" eller "linkedin" i respektive Zap. Fältnamnen i {{ }} kommer från Zapiers trigger-data.</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // All planned posts for May 2026
+  const POSTS = [
+    { id: 'maj-04-ig', date: '2026-05-04', day: 4, platform: 'instagram', format: 'Reels',    topic: 'Vad ingår i en SSSB-lägenhet? Roomtour i Kungshamra', week: 1 },
+    { id: 'maj-05-tt', date: '2026-05-05', day: 5, platform: 'tiktok',    format: 'Video',    topic: 'POV: Du får en SSSB-lägenhet efter lång kötid', week: 1 },
+    { id: 'maj-06-li', date: '2026-05-06', day: 6, platform: 'linkedin',  format: 'Inlägg',   topic: 'SSSB – av, för, med studenter. Vår roll i Stockholms bostadsmarknad', week: 1 },
+    { id: 'maj-07-ig', date: '2026-05-07', day: 7, platform: 'instagram', format: 'Karusell', topic: '5 tips när du flyttar in i din första studentlägenhet', week: 1 },
+    { id: 'maj-08-tt', date: '2026-05-08', day: 8, platform: 'tiktok',    format: 'Video',    topic: 'Stockholms bästa studieplatser nära SSSB-områden', week: 1 },
+    { id: 'maj-11-ig', date: '2026-05-11', day: 11, platform: 'instagram', format: 'Bild',     topic: 'Möt en hyresgäst – livet i korridor på Lappis', week: 2 },
+    { id: 'maj-12-tt', date: '2026-05-12', day: 12, platform: 'tiktok',    format: 'Video',    topic: 'Hur lång är kötiden till SSSB? Vi svarar på era frågor', week: 2 },
+    { id: 'maj-13-ig', date: '2026-05-13', day: 13, platform: 'instagram', format: 'Stories',  topic: 'Quiz: Vilket SSSB-område passar dig bäst?', week: 2 },
+    { id: 'maj-14-li', date: '2026-05-14', day: 14, platform: 'linkedin',  format: 'Artikel',  topic: 'SSSB och hållbart byggande – Norra Djurgårdsstaden', week: 2 },
+    { id: 'maj-15-ig', date: '2026-05-15', day: 15, platform: 'instagram', format: 'Reels',    topic: 'Trappkonst-tävlingen 2026 – se bidragen!', week: 2 },
+    { id: 'maj-18-tt', date: '2026-05-18', day: 18, platform: 'tiktok',    format: 'Video',    topic: 'Inred ett studentrum för under 3 000 kr', week: 3 },
+    { id: 'maj-19-ig', date: '2026-05-19', day: 19, platform: 'instagram', format: 'Karusell', topic: 'SSSB:s bostadsområden – Norr, Söder & City', week: 3 },
+    { id: 'maj-20-li', date: '2026-05-20', day: 20, platform: 'linkedin',  format: 'Inlägg',   topic: 'Vi söker kollegor! Jobba på Sveriges största studentbostadsbolag', week: 3 },
+    { id: 'maj-21-ig', date: '2026-05-21', day: 21, platform: 'instagram', format: 'Bild',     topic: 'Löpgruppen är igång för säsongen – Häng med!', week: 3 },
+    { id: 'maj-22-tt', date: '2026-05-22', day: 22, platform: 'tiktok',    format: 'Video',    topic: '3 myter om SSSB vi vill slå hål på', week: 3 },
+    { id: 'maj-25-ig', date: '2026-05-25', day: 25, platform: 'instagram', format: 'Reels',    topic: 'Sommaren i Stockholm – tips för dig som bor kvar', week: 4 },
+    { id: 'maj-26-tt', date: '2026-05-26', day: 26, platform: 'tiktok',    format: 'Video',    topic: 'Registrera dig i kön nu – så funkar det', week: 4 },
+    { id: 'maj-27-ig', date: '2026-05-27', day: 27, platform: 'instagram', format: 'Karusell', topic: 'Examenssäsong – grattis till alla studenter!', week: 4 },
+    { id: 'maj-28-li', date: '2026-05-28', day: 28, platform: 'linkedin',  format: 'Artikel',  topic: 'NKI-resultaten är inne – vad säger våra hyresgäster?', week: 4 },
+    { id: 'maj-29-tt', date: '2026-05-29', day: 29, platform: 'tiktok',    format: 'Video',    topic: 'Pack med mig – sista dagen i studentlägenheten', week: 4 }
+  ];
+
+  const SVG = {
+    instagram: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>',
+    tiktok: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.17 8.17 0 004.79 1.52V6.79a4.85 4.85 0 01-1.02-.1z"/></svg>',
+    linkedin: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>'
+  };
+
+  const TODAY = new Date().toISOString().split('T')[0];
+  let currentFilter = 'all';
+  let webhookPosts = []; // Published posts from Zapier webhooks
+
+  // --- Local log (manual fallback) ---
+  function getLog() {
+    try { return JSON.parse(localStorage.getItem('pub_log') || '{}'); } catch { return {}; }
+  }
+  function saveLog(log) {
+    localStorage.setItem('pub_log', JSON.stringify(log));
+  }
+
+  // --- Auto-matching: find which planned post a webhook post belongs to ---
+  function autoMatch(webhookPost, planned) {
+    // Match by: same platform + published within 2 days of planned date
+    const candidates = planned.filter(p =>
+      p.platform === webhookPost.platform &&
+      !getLog()[p.id] // not already matched
+    );
+
+    if (candidates.length === 0) return null;
+
+    const pubDate = new Date(webhookPost.published_at);
+
+    // Find closest planned post by date
+    let best = null;
+    let bestDiff = Infinity;
+    for (const c of candidates) {
+      const plannedDate = new Date(c.date);
+      const diff = Math.abs(pubDate - plannedDate) / (1000 * 60 * 60 * 24);
+      if (diff < bestDiff && diff <= 3) { // within 3 days
+        bestDiff = diff;
+        best = c;
+      }
+    }
+
+    // Also check text similarity as bonus signal
+    if (!best && webhookPost.post_text) {
+      const text = webhookPost.post_text.toLowerCase();
+      for (const c of candidates) {
+        const keywords = c.topic.toLowerCase().split(/\s+/).filter(w => w.length > 4);
+        const matches = keywords.filter(kw => text.includes(kw));
+        if (matches.length >= 2) {
+          best = c;
+          break;
+        }
+      }
+    }
+
+    return best;
+  }
+
+  // --- Fetch published posts from Supabase (via webhook) ---
+  async function loadWebhookPosts() {
+    try {
+      const res = await fetch('/api/published?month=2026-05');
+      if (!res.ok) return;
+      const data = await res.json();
+      webhookPosts = data.posts || [];
+
+      // Auto-match unmatched posts
+      const log = getLog();
+      let changed = false;
+
+      for (const wp of webhookPosts) {
+        // Skip if already manually matched
+        if (wp.matched_plan_id && log[wp.matched_plan_id]) continue;
+
+        // If already matched in DB, apply to local log
+        if (wp.matched_plan_id) {
+          if (!log[wp.matched_plan_id]) {
+            log[wp.matched_plan_id] = {
+              publishedAt: wp.published_at,
+              link: wp.post_link || '',
+              webhookId: wp.id,
+              auto: true
+            };
+            changed = true;
+          }
+          continue;
+        }
+
+        // Try auto-match
+        const match = autoMatch(wp, POSTS);
+        if (match) {
+          log[match.id] = {
+            publishedAt: wp.published_at,
+            link: wp.post_link || '',
+            webhookId: wp.id,
+            auto: true
+          };
+          // Save match back to API
+          fetch('/api/published', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: wp.id, matched_plan_id: match.id })
+          }).catch(() => {});
+          changed = true;
+        }
+      }
+
+      if (changed) saveLog(log);
+      render();
+      renderUnmatched();
+    } catch (e) {
+      // API not available (local dev) — that's fine, manual mode works
+    }
+  }
+
+  function renderUnmatched() {
+    const log = getLog();
+    const matchedWebhookIds = new Set();
+    Object.values(log).forEach(entry => {
+      if (entry.webhookId) matchedWebhookIds.add(entry.webhookId);
+    });
+
+    const unmatched = webhookPosts.filter(wp => !wp.matched_plan_id && !matchedWebhookIds.has(wp.id));
+    const section = document.getElementById('unmatched-section');
+    const list = document.getElementById('unmatched-list');
+
+    if (unmatched.length === 0) {
+      section.style.display = 'none';
+      return;
+    }
+
+    section.style.display = 'block';
+    list.innerHTML = '';
+
+    unmatched.forEach(wp => {
+      const pubDate = new Date(wp.published_at);
+      const card = document.createElement('div');
+      card.className = 'log-card';
+      card.style.borderLeft = '4px solid var(--yellow)';
+
+      const preview = (wp.post_text || '').substring(0, 80) + ((wp.post_text || '').length > 80 ? '...' : '');
+
+      // Build dropdown of unmatched planned posts for same platform
+      const candidates = POSTS.filter(p => p.platform === wp.platform && !log[p.id]);
+      const options = candidates.map(c =>
+        `<option value="${c.id}">${c.day} maj — ${c.topic.substring(0, 40)}</option>`
+      ).join('');
+
+      card.innerHTML = `
+        <div class="log-card-inner">
+          <div class="log-date">
+            <div class="log-date-day">${pubDate.getDate()}</div>
+            <div class="log-date-month">${pubDate.toLocaleDateString('sv-SE', { month: 'short' })}</div>
+          </div>
+          <div class="log-platform-badge ${wp.platform}">${SVG[wp.platform]}</div>
+          <div class="log-content">
+            <div class="log-format">${wp.media_type || wp.platform}</div>
+            <div class="log-topic">${preview || 'Inlägg utan text'}</div>
+            ${wp.post_link ? `<div style="font-size:11px;margin-top:2px;"><a href="${wp.post_link}" target="_blank" style="color:var(--red);">Visa inlägg</a></div>` : ''}
+          </div>
+          <div class="log-actions" style="flex-direction:column;gap:6px;">
+            <select id="match-${wp.id}" style="font-size:12px;padding:6px 8px;border:2px solid var(--border-dark);border-radius:var(--radius);font-family:inherit;">
+              <option value="">Koppla till planerat inlägg...</option>
+              ${options}
+            </select>
+            <button class="mark-btn" style="font-size:10px;padding:6px 12px;" onclick="manualMatch('${wp.id}')">Koppla</button>
+          </div>
+        </div>
+      `;
+      list.appendChild(card);
+    });
+  }
+
+  async function manualMatch(webhookId) {
+    const select = document.getElementById('match-' + webhookId);
+    const planId = select?.value;
+    if (!planId) { alert('Välj ett planerat inlägg.'); return; }
+
+    const wp = webhookPosts.find(p => p.id === webhookId);
+    if (!wp) return;
+
+    const log = getLog();
+    log[planId] = {
+      publishedAt: wp.published_at,
+      link: wp.post_link || '',
+      webhookId: wp.id,
+      auto: false
+    };
+    saveLog(log);
+
+    // Save to API
+    try {
+      await fetch('/api/published', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: webhookId, matched_plan_id: planId })
+      });
+    } catch (e) {}
+
+    render();
+    renderUnmatched();
+  }
+
+  // --- Status ---
+  function getStatus(post) {
+    const log = getLog();
+    if (log[post.id]) return 'published';
+    if (post.date < TODAY) return 'late';
+    return 'upcoming';
+  }
+
+  function setFilter(filter, btn) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  }
+
+  // --- Manual publish (fallback) ---
+  function markPublished(postId) {
+    const card = document.getElementById('card-' + postId);
+    const existing = card.querySelector('.link-input-row');
+    if (existing) { existing.remove(); return; }
+
+    const row = document.createElement('div');
+    row.className = 'link-input-row';
+    row.innerHTML = `
+      <input type="text" placeholder="Klistra in länk till inlägget (valfritt)" id="link-${postId}">
+      <button class="link-save-btn" onclick="confirmPublish('${postId}')">Spara</button>
+    `;
+    card.appendChild(row);
+    row.querySelector('input').focus();
+  }
+
+  function confirmPublish(postId) {
+    const link = document.getElementById('link-' + postId)?.value.trim() || '';
+    const log = getLog();
+    log[postId] = { publishedAt: new Date().toISOString(), link, auto: false };
+    saveLog(log);
+    render();
+  }
+
+  function undoPublish(postId) {
+    const log = getLog();
+    delete log[postId];
+    saveLog(log);
+    render();
+    renderUnmatched();
+  }
+
+  // --- Render ---
+  function render() {
+    const log = getLog();
+    const list = document.getElementById('post-list');
+    list.innerHTML = '';
+
+    let totalCount = POSTS.length;
+    let publishedCount = 0;
+    let lateCount = 0;
+    let upcomingCount = 0;
+    let lastWeek = 0;
+
+    const filtered = POSTS.filter(post => {
+      const status = getStatus(post);
+      if (status === 'published') publishedCount++;
+      else if (status === 'late') lateCount++;
+      else upcomingCount++;
+
+      if (currentFilter === 'all') return true;
+      if (['published', 'late', 'upcoming'].includes(currentFilter)) return status === currentFilter;
+      if (['instagram', 'tiktok', 'linkedin'].includes(currentFilter)) return post.platform === currentFilter;
+      return true;
+    });
+
+    document.getElementById('stat-total').textContent = totalCount;
+    document.getElementById('stat-published').textContent = publishedCount;
+    document.getElementById('stat-late').textContent = lateCount;
+    document.getElementById('stat-upcoming').textContent = upcomingCount;
+
+    filtered.forEach(post => {
+      const status = getStatus(post);
+      const entry = log[post.id];
+
+      if (post.week !== lastWeek && currentFilter === 'all') {
+        lastWeek = post.week;
+        const divider = document.createElement('div');
+        divider.className = 'week-divider';
+        const endDay = post.week < 4 ? (post.day + 4) : 29;
+        divider.textContent = `Vecka ${post.week} — ${post.day}–${endDay} maj`;
+        list.appendChild(divider);
+      }
+
+      const card = document.createElement('div');
+      card.className = `log-card ${status}`;
+      card.id = 'card-' + post.id;
+
+      const statusLabel = status === 'published'
+        ? (entry?.auto ? 'Auto-publicerad' : 'Publicerad')
+        : status === 'late' ? 'Försenad' : 'Kommande';
+
+      card.innerHTML = `
+        <div class="log-card-inner">
+          <div class="log-date">
+            <div class="log-date-day">${post.day}</div>
+            <div class="log-date-month">Maj</div>
+          </div>
+          <div class="log-platform-badge ${post.platform}">${SVG[post.platform]}</div>
+          <div class="log-content">
+            <div class="log-format">${post.format}</div>
+            <div class="log-topic">${post.topic}</div>
+          </div>
+          <div class="log-status ${status}">
+            <span class="dot"></span> ${statusLabel}
+          </div>
+          <div class="log-actions">
+            ${status === 'published'
+              ? `<button class="undo-btn" onclick="undoPublish('${post.id}')">Ångra</button>`
+              : `<button class="mark-btn" onclick="markPublished('${post.id}')">Publicerad</button>`
+            }
+          </div>
+        </div>
+        ${entry && entry.link ? `<div class="link-text">Länk: <a href="${entry.link}" target="_blank" rel="noopener">${entry.link}</a></div>` : ''}
+      `;
+      list.appendChild(card);
+    });
+
+    if (filtered.length === 0) {
+      list.innerHTML = '<p style="color:var(--tan);text-align:center;padding:40px;">Inga inlägg matchar filtret.</p>';
+    }
+  }
+
+  // --- Init ---
+  // Show webhook URL in setup guide
+  document.getElementById('webhook-url').textContent = window.location.origin + '/api/webhook-published';
+
+  render();
+  loadWebhookPosts(); // Fetch from Supabase and auto-match
+</script>
+
+</body>
+</html>

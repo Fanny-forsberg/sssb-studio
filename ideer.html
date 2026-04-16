@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trend2SSSB — SSSB Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="ideer.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">SSSB <span>Studio</span></div>
+    <nav class="header-nav">
+      <a href="index.html">Skapa & Schemalägg</a>
+      <a href="publicering.html">Publiceringsplan</a>
+      <a href="ideer.html" class="active">Idéer</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <h1>Trend<em>2SSSB</em></h1>
+    <p>Ta trender från TikTok och Instagram och gör dem till content för SSSB — med hook, videoidé och färdig caption.</p>
+  </section>
+
+  <!-- HOT FOR SSSB -->
+  <section class="hot-box">
+    <div class="hot-box-header">
+      <span class="hot-box-flame">🔥</span>
+      <div>
+        <h2 class="hot-box-title">Hot för SSSB just nu</h2>
+        <p class="hot-box-sub">Trender som passar perfekt för studentboende-content — april 2026</p>
+      </div>
+    </div>
+    <div class="hot-grid">
+      <div class="hot-card" onclick="prefillTrend('Hard Launch studentbostad')">
+        <div class="hot-card-score">5/5</div>
+        <div class="hot-card-name">"Hard Launch"</div>
+        <div class="hot-card-desc">Avslöja sin nya studentlägenhet dramatiskt — perfekt för inflyttning och kö-content.</div>
+        <div class="hot-card-example">→ "Hard launching my 19 sqm studio in Kungshamra"</div>
+      </div>
+      <div class="hot-card" onclick="prefillTrend('World Stop before after rum')">
+        <div class="hot-card-score">5/5</div>
+        <div class="hot-card-name">"World Stop!" reveal</div>
+        <div class="hot-card-desc">Before-and-after format. Tomt rum → fullt möblerat. Eller kö-dagar → nyckel i hand.</div>
+        <div class="hot-card-example">→ "World stop! 847 dagars kötid → min egen lägenhet"</div>
+      </div>
+      <div class="hot-card" onclick="prefillTrend('Not Meant to Live uncomfortable studentboende')">
+        <div class="hot-card-score">4/5</div>
+        <div class="hot-card-name">"Not Meant to Live Uncomfortable"</div>
+        <div class="hot-card-desc">White Lotus-inspirerad. Visa att studentboende inte behöver vara trist — lyxiga detaljer i enkel bostad.</div>
+        <div class="hot-card-example">→ Panorera över snyggt inrett 19 kvm-rum med solljus</div>
+      </div>
+      <div class="hot-card" onclick="prefillTrend('Color Walk studentområde')">
+        <div class="hot-card-score">4/5</div>
+        <div class="hot-card-name">Color Walk</div>
+        <div class="hot-card-desc">Välj en färg, gå genom SSSB-området och filma allt som matchar. Enkelt, visuellt, funkar direkt.</div>
+        <div class="hot-card-example">→ Color walk: gul 💛 genom Lappis en vårdag</div>
+      </div>
+      <div class="hot-card" onclick="prefillTrend('God Forbid studentboende myter')">
+        <div class="hot-card-score">4/5</div>
+        <div class="hot-card-name">"God Forbid"</div>
+        <div class="hot-card-desc">Försvara studentlivet mot fördomar med humor. "God forbid I actually like living in 19 sqm"</div>
+        <div class="hot-card-example">→ Bemöt myter om korridor, kötid, storlek</div>
+      </div>
+      <div class="hot-card" onclick="prefillTrend('Things I wish I knew before student housing')">
+        <div class="hot-card-score">5/5</div>
+        <div class="hot-card-name">"Things I wish I knew before…"</div>
+        <div class="hot-card-desc">Evergreen-format som alltid funkar. Tips till nya studenter = bästa kö-CTA.</div>
+        <div class="hot-card-example">→ "5 things I wish I knew before moving to Stockholm as a student"</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ideas-form">
+    <div class="card">
+
+      <div class="field">
+        <label for="trend-input">Sök efter trender <span class="optional">(lämna tomt = hetaste just nu)</span></label>
+        <input type="text" id="trend-input" placeholder="T.ex. roomtour content, student move-in, trending audio...">
+      </div>
+
+      <div class="field">
+        <label>Plattform</label>
+        <div class="platform-select">
+          <label class="platform-radio">
+            <input type="radio" name="platform" value="tiktok" checked>
+            <span class="platform-radio-chip tiktok">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.17 8.17 0 004.79 1.52V6.79a4.85 4.85 0 01-1.02-.1z"/></svg>
+              TikTok
+            </span>
+          </label>
+          <label class="platform-radio">
+            <input type="radio" name="platform" value="instagram">
+            <span class="platform-radio-chip instagram">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              Instagram
+            </span>
+          </label>
+          <label class="platform-radio">
+            <input type="radio" name="platform" value="linkedin">
+            <span class="platform-radio-chip linkedin">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <button id="generateBtn" class="btn-primary" onclick="generateTrends()">
+        Hitta trender
+      </button>
+
+    </div>
+  </section>
+
+  <section class="ideas-results" id="results" style="display:none;">
+    <h2 id="results-title">Trender</h2>
+    <p class="ideas-results-sub" id="results-sub"></p>
+    <div id="trends-container"></div>
+  </section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+<script>
+  const platformNames = { tiktok: 'TikTok', instagram: 'Instagram', linkedin: 'LinkedIn' };
+
+  function prefillTrend(text) {
+    document.getElementById('trend-input').value = text;
+    generateTrends();
+  }
+
+  document.getElementById('trend-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') generateTrends();
+  });
+
+  async function generateTrends() {
+    const topic = document.getElementById('trend-input').value.trim();
+    const platform = document.querySelector('input[name="platform"]:checked')?.value || 'tiktok';
+
+    const btn = document.getElementById('generateBtn');
+    btn.disabled = true;
+    btn.textContent = 'Söker trender...';
+
+    const section = document.getElementById('results');
+    const container = document.getElementById('trends-container');
+    section.style.display = 'block';
+    container.innerHTML = `
+      <div class="ideas-loading">
+        <div class="spinner"></div>
+        <p>Skannar trender och anpassar till SSSB...</p>
+      </div>
+    `;
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    try {
+      const res = await fetch('/api/trends', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ topic, platform })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.trends) {
+        container.innerHTML = `<div class="ideas-error">${data.error || 'Kunde inte hämta trender. Försök igen.'}</div>`;
+        return;
+      }
+
+      document.getElementById('results-title').textContent = topic ? `Trender: "${topic}"` : 'Trender just nu';
+      document.getElementById('results-sub').textContent =
+        `${data.trends.length} trender · ${platformNames[platform]} · anpassade för SSSB`;
+
+      container.innerHTML = '';
+      const list = document.createElement('div');
+      list.className = 'trends-list';
+
+      data.trends.forEach((trend, i) => {
+        const card = document.createElement('div');
+        card.className = 'trend-card';
+
+        const adaptationsHtml = (trend.sssb_adaptations || [])
+          .map(a => `<div class="sssb-adaptation">${esc(a)}</div>`).join('');
+
+        const v = trend.video_idea || {};
+
+        const score = trend.relevance_score || 0;
+        const scoreClass = score >= 4 ? 'high' : score >= 3 ? 'mid' : 'low';
+
+        card.innerHTML = `
+          <div class="trend-card-header">
+            <span class="trend-num">${i + 1}</span>
+            <span class="trend-card-name">${esc(trend.trend_name)}</span>
+            <span class="relevance-badge ${scoreClass}" title="${esc(trend.relevance_reason || '')}">${score}/5 SSSB-match</span>
+          </div>
+          <div class="trend-card-body">
+
+            <div>
+              <div class="trend-section-label"><span class="emoji">🧠</span> Vad trenden är</div>
+              <div class="trend-explanation">${esc(trend.trend_explanation)}</div>
+            </div>
+
+            <div>
+              <div class="trend-section-label"><span class="emoji">🔁</span> SSSB-anpassning</div>
+              <div class="sssb-adaptations">${adaptationsHtml}</div>
+            </div>
+
+            <div>
+              <div class="trend-section-label"><span class="emoji">🎥</span> Videoidé</div>
+              <div class="video-idea-grid">
+                <div class="video-idea-item hook">
+                  <div class="video-idea-item-label">Hook</div>
+                  <div class="video-idea-item-value">${esc(v.hook)}</div>
+                </div>
+                <div class="video-idea-item">
+                  <div class="video-idea-item-label">Text overlay</div>
+                  <div class="video-idea-item-value">${esc(v.text_overlay)}</div>
+                </div>
+                <div class="video-idea-item">
+                  <div class="video-idea-item-label">Vad du filmar</div>
+                  <div class="video-idea-item-value">${esc(v.what_to_film)}</div>
+                </div>
+                <div class="video-idea-item">
+                  <div class="video-idea-item-label">CTA</div>
+                  <div class="video-idea-item-value">${esc(v.cta)}</div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="trend-section-label"><span class="emoji">✍️</span> Färdig caption</div>
+              <div class="trend-caption-box">
+                <button class="caption-copy-btn" onclick="copyCaption(this, ${i})">Kopiera</button>
+                ${esc(trend.caption)}
+              </div>
+            </div>
+
+          </div>
+        `;
+        list.appendChild(card);
+      });
+
+      container.appendChild(list);
+      window._lastTrends = data.trends;
+
+    } catch (err) {
+      container.innerHTML = `<div class="ideas-error">Nätverksfel: ${err.message}</div>`;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Hitta trender';
+    }
+  }
+
+  function esc(str) {
+    const d = document.createElement('div');
+    d.textContent = str || '';
+    return d.innerHTML;
+  }
+
+  async function copyCaption(btn, index) {
+    const trend = window._lastTrends?.[index];
+    if (!trend) return;
+    await navigator.clipboard.writeText(trend.caption);
+    btn.textContent = 'Kopierad!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Kopiera'; btn.classList.remove('copied'); }, 2000);
+  }
+</script>
+
+</body>
+</html>

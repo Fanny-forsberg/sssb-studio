@@ -1,0 +1,151 @@
+/* ─── CHANNEL OVERVIEW ────────────────────────────────── */
+.channels-overview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 40px;
+}
+.channel-card {
+  background: var(--white);
+  border: 2px solid var(--brown);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .15s, transform .15s;
+}
+.channel-card:hover { box-shadow: var(--shadow); transform: translate(-1px,-1px); }
+
+.channel-icon {
+  width: 42px; height: 42px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.channel-card.instagram .channel-icon { background: #FFF0F6; color: #C0255C; }
+.channel-card.tiktok    .channel-icon { background: #F5F5F5; color: #161823; }
+.channel-card.linkedin  .channel-icon { background: #E8F3FB; color: #0062A0; }
+
+.channel-info { flex: 1; min-width: 0; }
+.channel-name  { font-weight: 700; font-size: 14px; }
+.channel-handle { font-size: 12px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.channel-freq { font-size: 12px; font-weight: 600; color: var(--blue); white-space: nowrap; }
+
+/* ─── CALENDAR SECTION ────────────────────────────────── */
+.calendar-section {
+  background: var(--white);
+  border: 2px solid var(--brown);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  margin-bottom: 40px;
+}
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.calendar-header h2 { font-family: 'Fraunces', Georgia, serif; font-size: 28px; font-weight: 900; letter-spacing: -.5px; color: var(--brown); }
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12.5px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.legend-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  margin-right: 4px;
+}
+.legend-dot.instagram { background: #E1306C; }
+.legend-dot.tiktok    { background: #161823; }
+.legend-dot.linkedin  { background: #0077B5; }
+
+.week-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+.week-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted-light);
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.day-cell {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: box-shadow .15s;
+}
+.day-cell:hover { box-shadow: var(--shadow-md); }
+.day-num { font-size: 11.5px; font-weight: 700; color: var(--muted-light); }
+
+.post-item {
+  border-radius: 6px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.post-item.instagram { background: #FFF0F6; border-left: 3px solid #E1306C; }
+.post-item.tiktok    { background: #F5F5F5; border-left: 3px solid #161823; }
+.post-item.linkedin  { background: #E8F3FB; border-left: 3px solid #0077B5; }
+
+.post-type {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  opacity: .65;
+}
+.post-item.instagram .post-type { color: #C0255C; }
+.post-item.tiktok    .post-type { color: #161823; }
+.post-item.linkedin  .post-type { color: #0062A0; }
+.post-topic { font-size: 11px; line-height: 1.4; color: var(--text-2); }
+
+/* ─── PILLARS ─────────────────────────────────────────── */
+.pillars-section { margin-bottom: 60px; }
+.pillars-section h2 { font-family: 'Fraunces', Georgia, serif; font-size: 36px; font-weight: 900; letter-spacing: -1px; margin-bottom: 6px; color: var(--brown); }
+.section-desc { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.pillar {
+  background: var(--white);
+  border: 2px solid var(--brown);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .15s, transform .15s;
+}
+.pillar:hover { box-shadow: var(--shadow); transform: translate(-1px,-1px); }
+.pillar-icon { font-size: 26px; margin-bottom: 12px; }
+.pillar-name { font-family: 'Fraunces', Georgia, serif; font-weight: 900; font-size: 17px; margin-bottom: 5px; color: var(--brown); }
+.pillar-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+@media (max-width: 700px) {
+  .channels-overview { grid-template-columns: 1fr; }
+  .pillars-grid { grid-template-columns: 1fr 1fr; }
+}
