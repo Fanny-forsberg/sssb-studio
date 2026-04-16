@@ -17,3 +17,4 @@ Verktyg och webbsidor som hjälper Fanny i hennes dagliga arbete som digital kom
 - GitHub: aktivt
 - Vercel: aktivt
 - Supabase: aktivt
+
