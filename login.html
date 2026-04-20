@@ -8,61 +8,138 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-    body { display:flex; align-items:center; justify-content:center; min-height:100vh; padding:24px; }
+    body {
+      display:flex; align-items:center; justify-content:center;
+      min-height:100vh; padding:24px;
+      background:#1a1a2e; overflow:hidden; position:relative;
+    }
+
+    /* Neon noodles background */
+    .noodle-bg { position:fixed; inset:0; z-index:0; overflow:hidden; }
+    .noodle-bg svg { width:100%; height:100%; }
+    .noodle {
+      fill:none; stroke-width:3; stroke-linecap:round;
+      filter:drop-shadow(0 0 8px currentColor) drop-shadow(0 0 20px currentColor);
+      animation:noodleDraw 4s ease-in-out infinite alternate;
+    }
+    .noodle.n1 { color:#ff006e; stroke:#ff006e; stroke-dasharray:800; animation-delay:0s; }
+    .noodle.n2 { color:#00f5d4; stroke:#00f5d4; stroke-dasharray:600; animation-delay:.5s; }
+    .noodle.n3 { color:#fee440; stroke:#fee440; stroke-dasharray:700; animation-delay:1s; }
+    .noodle.n4 { color:#8338ec; stroke:#8338ec; stroke-dasharray:500; animation-delay:1.5s; }
+    .noodle.n5 { color:#fb5607; stroke:#fb5607; stroke-dasharray:900; animation-delay:.3s; }
+    .noodle.n6 { color:#3a86ff; stroke:#3a86ff; stroke-dasharray:650; animation-delay:.8s; }
+    .noodle.n7 { color:#ff006e; stroke:#ff006e; stroke-dasharray:550; animation-delay:1.2s; opacity:.5; }
+    .noodle.n8 { color:#00f5d4; stroke:#00f5d4; stroke-dasharray:750; animation-delay:1.8s; opacity:.4; }
+
+    @keyframes noodleDraw {
+      0% { stroke-dashoffset:0; opacity:.6; }
+      50% { opacity:1; }
+      100% { stroke-dashoffset:200; opacity:.6; }
+    }
+
+    /* Glass login box */
     .login-box {
       width:100%; max-width:400px;
-      background:var(--white); border:2px solid var(--brown);
-      border-radius:var(--radius-lg); padding:44px 34px 36px;
-      box-shadow:var(--shadow);
+      background:rgba(255,255,255,.08);
+      backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+      border:1px solid rgba(255,255,255,.15);
+      border-radius:20px; padding:44px 34px 36px;
+      box-shadow:0 8px 32px rgba(0,0,0,.3);
+      position:relative; z-index:1;
     }
     .login-logo {
       font-family:'Fraunces',Georgia,serif;
-      font-weight:900; font-size:30px; color:var(--brown);
+      font-weight:900; font-size:32px; color:#fff;
       text-align:center; margin-bottom:4px;
     }
-    .login-logo span { color:var(--red); }
-    .login-sub { text-align:center; font-size:14px; color:var(--tan); margin-bottom:32px; }
+    .login-logo span {
+      background:linear-gradient(135deg,#ff006e,#fb5607,#fee440);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .login-sub { text-align:center; font-size:14px; color:rgba(255,255,255,.5); margin-bottom:32px; }
+
     .login-box .field { margin-bottom:18px; }
+    .login-box .field label {
+      color:rgba(255,255,255,.5);
+    }
     .login-box input[type="email"],
-    .login-box input[type="password"] {
-      width:100%; border:2px solid var(--border-dark);
-      border-radius:var(--radius); padding:13px 14px;
-      font-size:15px; font-family:inherit; color:var(--brown);
-      background:var(--cream); outline:none;
-      transition:border-color .15s, box-shadow .15s;
+    .login-box input[type="password"],
+    .login-box input[type="text"] {
+      width:100%;
+      border:1px solid rgba(255,255,255,.15);
+      border-radius:8px; padding:13px 14px;
+      font-size:15px; font-family:inherit;
+      color:#fff;
+      background:rgba(255,255,255,.06);
+      outline:none;
+      transition:all .2s;
     }
+    .login-box input::placeholder { color:rgba(255,255,255,.25); }
     .login-box input:focus {
-      border-color:var(--brown);
-      box-shadow:3px 3px 0 var(--brown);
-      background:var(--white);
+      border-color:rgba(255,255,255,.4);
+      box-shadow:0 0 0 3px rgba(255,255,255,.08);
+      background:rgba(255,255,255,.1);
     }
-    .login-box .btn-primary { width:100%; text-align:center; margin-top:6px; }
+
+    .login-box .btn-primary {
+      width:100%; text-align:center; margin-top:6px;
+      background:linear-gradient(135deg,#ff006e,#fb5607);
+      border:none; color:#fff;
+      box-shadow:0 4px 20px rgba(255,0,110,.3);
+      border-radius:8px; padding:14px 28px;
+      font-size:14px; font-weight:700; letter-spacing:.06em;
+      text-transform:uppercase; cursor:pointer;
+      transition:all .2s;
+    }
+    .login-box .btn-primary:hover {
+      box-shadow:0 6px 30px rgba(255,0,110,.5);
+      transform:translateY(-1px);
+    }
+    .login-box .btn-primary:active {
+      transform:translateY(1px);
+      box-shadow:0 2px 10px rgba(255,0,110,.3);
+    }
+
     .login-error {
-      background:#FEF2F2; border:2px solid var(--red);
-      border-radius:var(--radius); padding:10px 14px;
-      font-size:13px; color:var(--red); font-weight:600;
+      background:rgba(255,0,110,.15); border:1px solid rgba(255,0,110,.4);
+      border-radius:8px; padding:10px 14px;
+      font-size:13px; color:#ff006e; font-weight:600;
       margin-bottom:16px; display:none;
     }
     .login-success {
-      background:var(--green-light); border:2px solid var(--green);
-      border-radius:var(--radius); padding:10px 14px;
-      font-size:13px; color:var(--green); font-weight:600;
+      background:rgba(0,245,212,.15); border:1px solid rgba(0,245,212,.4);
+      border-radius:8px; padding:10px 14px;
+      font-size:13px; color:#00f5d4; font-weight:600;
       margin-bottom:16px; display:none;
     }
     .login-toggle {
       text-align:center; margin-top:18px;
-      font-size:13px; color:var(--tan);
+      font-size:13px; color:rgba(255,255,255,.4);
     }
     .login-toggle a {
-      color:var(--red); text-decoration:underline; cursor:pointer; font-weight:600;
+      color:#00f5d4; text-decoration:underline; cursor:pointer; font-weight:600;
     }
     .login-footer {
-      text-align:center; font-size:11px; color:var(--tan-light);
+      text-align:center; font-size:11px; color:rgba(255,255,255,.2);
       margin-top:22px; line-height:1.5;
     }
   </style>
 </head>
 <body>
+
+<div class="noodle-bg">
+  <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+    <path class="noodle n1" d="M-50,200 C100,100 200,350 350,250 S500,100 650,200 S800,350 950,200 S1100,50 1250,180 S1400,300 1500,200"/>
+    <path class="noodle n2" d="M-30,500 C80,400 180,600 330,480 S500,350 620,500 S780,650 900,500 S1050,350 1200,480 S1350,600 1500,500"/>
+    <path class="noodle n3" d="M-50,700 C150,600 250,800 400,700 S580,550 700,700 S850,850 1000,700 S1150,550 1300,680 S1450,800 1550,700"/>
+    <path class="noodle n4" d="M-20,100 C120,200 200,50 350,150 S520,280 650,120 S800,0 950,130 S1100,250 1250,100 S1400,0 1500,100"/>
+    <path class="noodle n5" d="M-50,400 C100,300 250,500 400,380 S550,250 700,400 S850,520 1000,380 S1150,250 1300,400 S1450,500 1550,380"/>
+    <path class="noodle n6" d="M-30,800 C120,700 220,850 370,780 S530,650 680,800 S830,900 980,780 S1130,650 1280,780 S1430,900 1530,800"/>
+    <path class="noodle n7" d="M200,-50 C250,100 150,200 250,350 S350,500 250,600 S150,750 250,850 S350,950 250,1050"/>
+    <path class="noodle n8" d="M900,-30 C950,120 850,220 950,370 S1050,520 950,620 S850,770 950,870"/>
+  </svg>
+</div>
 
 <div class="login-box">
   <div class="login-logo">SSSB <span>Studio</span></div>
