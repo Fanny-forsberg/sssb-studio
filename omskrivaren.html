@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Omskrivaren — SSSB Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .rewrite-form { max-width: 700px; }
+
+    .rewrite-form textarea {
+      min-height: 140px;
+      line-height: 1.7;
+    }
+
+    .results-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .result-card {
+      background: var(--white);
+      border: 2px solid var(--brown);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .result-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--brown);
+    }
+
+    .result-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      border-bottom: 2px solid var(--brown);
+    }
+    .result-header.instagram { background: #FFF0F6; }
+    .result-header.tiktok    { background: var(--brown); }
+    .result-header.linkedin  { background: #E8F3FB; }
+
+    .result-platform {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+    .result-platform.instagram { color: #C0255C; }
+    .result-platform.tiktok    { color: var(--cream); }
+    .result-platform.linkedin  { color: #0062A0; }
+
+    .result-header.tiktok .copy-btn { color: var(--tan-light); }
+
+    .result-textarea {
+      border: none;
+      padding: 18px 20px;
+      font-size: 15px;
+      font-family: inherit;
+      color: var(--brown);
+      background: transparent;
+      resize: vertical;
+      outline: none;
+      width: 100%;
+      min-height: 120px;
+      line-height: 1.7;
+    }
+    .result-textarea:focus { background: var(--cream); }
+
+    /* Loading skeleton */
+    .skeleton-block {
+      padding: 18px 20px;
+      min-height: 120px;
+    }
+    .skeleton-line {
+      height: 14px;
+      background: var(--cream-dark);
+      border-radius: 4px;
+      margin-bottom: 10px;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    .skeleton-line:nth-child(2) { width: 85%; }
+    .skeleton-line:nth-child(3) { width: 60%; }
+
+    #results-section {
+      display: none;
+      margin-top: 48px;
+    }
+    #results-section.visible { display: block; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">SSSB <span>Studio</span></div>
+      <nav class="header-nav">
+        <a href="index.html">Skapa &amp; Schemal&auml;gg</a>
+        <a href="publicering.html">Publiceringsplan</a>
+        <a href="ideer.html">Id&eacute;er</a>
+        <a href="omskrivaren.html" class="active">Omskrivaren</a>
+        <a href="svarsmall.html">Svarsmall</a>
+        <a href="kampanj.html">Kampanjer</a>
+        <a href="basta-tid.html">B&auml;sta tid</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-eyebrow">Anpassa till varje kanal</div>
+      <h1>Om<em>skrivaren</em></h1>
+      <p>Klistra in en caption &mdash; f&aring; den anpassad till Instagram, TikTok och LinkedIn automatiskt.</p>
+    </section>
+
+    <section class="rewrite-form">
+      <div class="card">
+        <div class="field">
+          <label for="source-text">Klistra in din text</label>
+          <textarea id="source-text" rows="6" placeholder="Klistra in din caption h&auml;r..."></textarea>
+        </div>
+
+        <div class="field">
+          <label>Anpassa till</label>
+          <div class="platforms">
+            <label class="platform-toggle">
+              <input type="checkbox" value="instagram" checked>
+              <span class="platform-chip instagram">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                Instagram
+              </span>
+            </label>
+            <label class="platform-toggle">
+              <input type="checkbox" value="tiktok" checked>
+              <span class="platform-chip tiktok">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.17 8.17 0 004.79 1.52V6.79a4.85 4.85 0 01-1.02-.1z"/></svg>
+                TikTok
+              </span>
+            </label>
+            <label class="platform-toggle">
+              <input type="checkbox" value="linkedin" checked>
+              <span class="platform-chip linkedin">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                LinkedIn
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <button class="btn-primary" id="rewrite-btn">Anpassa till alla kanaler</button>
+      </div>
+    </section>
+
+    <section id="results-section">
+      <h2>Resultat</h2>
+      <p class="results-desc">Redigera fritt innan du kopierar</p>
+      <div class="results-grid" id="results-grid"></div>
+    </section>
+  </main>
+
+  <script src="auth.js"></script>
+  <script>
+    const rewriteBtn = document.getElementById('rewrite-btn');
+    const sourceText = document.getElementById('source-text');
+    const resultsSection = document.getElementById('results-section');
+    const resultsGrid = document.getElementById('results-grid');
+
+    const platformLabels = {
+      instagram: 'Instagram',
+      tiktok: 'TikTok',
+      linkedin: 'LinkedIn'
+    };
+
+    const platformIcons = {
+      instagram: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>',
+      tiktok: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.17 8.17 0 004.79 1.52V6.79a4.85 4.85 0 01-1.02-.1z"/></svg>',
+      linkedin: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>'
+    };
+
+    function getSelectedPlatforms() {
+      return [...document.querySelectorAll('.platforms input:checked')].map(cb => cb.value);
+    }
+
+    function renderSkeleton(platforms) {
+      resultsGrid.innerHTML = '';
+      platforms.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'result-card';
+        card.innerHTML = `
+          <div class="result-header ${p}">
+            <span class="result-platform ${p}">${platformIcons[p]} ${platformLabels[p]}</span>
+          </div>
+          <div class="skeleton-block">
+            <div class="skeleton-line" style="width:95%"></div>
+            <div class="skeleton-line"></div>
+            <div class="skeleton-line"></div>
+          </div>
+        `;
+        resultsGrid.appendChild(card);
+      });
+      resultsSection.classList.add('visible');
+    }
+
+    function renderResults(captions, platforms) {
+      resultsGrid.innerHTML = '';
+      platforms.forEach(p => {
+        if (!captions[p]) return;
+        const card = document.createElement('div');
+        card.className = 'result-card';
+        card.innerHTML = `
+          <div class="result-header ${p}">
+            <span class="result-platform ${p}">${platformIcons[p]} ${platformLabels[p]}</span>
+            <button class="copy-btn" data-platform="${p}">Kopiera</button>
+          </div>
+          <textarea class="result-textarea" readonly>${captions[p]}</textarea>
+        `;
+        resultsGrid.appendChild(card);
+      });
+
+      resultsGrid.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const textarea = btn.closest('.result-card').querySelector('.result-textarea');
+          navigator.clipboard.writeText(textarea.value).then(() => {
+            btn.textContent = 'Kopierad!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+              btn.textContent = 'Kopiera';
+              btn.classList.remove('copied');
+            }, 2000);
+          });
+        });
+      });
+    }
+
+    rewriteBtn.addEventListener('click', async () => {
+      const text = sourceText.value.trim();
+      const platforms = getSelectedPlatforms();
+
+      if (!text) {
+        sourceText.focus();
+        return;
+      }
+      if (platforms.length === 0) {
+        alert('V\u00e4lj minst en kanal.');
+        return;
+      }
+
+      rewriteBtn.disabled = true;
+      rewriteBtn.textContent = 'Anpassar...';
+      renderSkeleton(platforms);
+
+      try {
+        const resp = await fetch('/api/rewrite', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text, platforms })
+        });
+
+        const data = await resp.json();
+
+        if (!resp.ok) {
+          throw new Error(data.error || 'N\u00e5got gick fel');
+        }
+
+        renderResults(data.captions, platforms);
+      } catch (err) {
+        resultsGrid.innerHTML = `<div class="card" style="border-color:var(--red);color:var(--red);text-align:center;padding:24px;">Fel: ${err.message}</div>`;
+      } finally {
+        rewriteBtn.disabled = false;
+        rewriteBtn.textContent = 'Anpassa till alla kanaler';
+      }
+    });
+  </script>
+</body>
+</html>

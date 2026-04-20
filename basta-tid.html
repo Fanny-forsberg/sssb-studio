@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bästa tid att posta — SSSB Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ─── PLATFORM CARDS ─────────────────────────────────── */
+    .platform-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      margin-bottom: 56px;
+    }
+
+    .platform-card {
+      background: var(--white);
+      border: 2px solid var(--brown);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .platform-card-header {
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 700;
+      font-size: 22px;
+      color: var(--white);
+    }
+    .platform-card-header svg {
+      flex-shrink: 0;
+    }
+
+    .platform-card-header.instagram { background: linear-gradient(135deg, #833AB4, #E1306C, #F77737); }
+    .platform-card-header.tiktok { background: #010101; }
+    .platform-card-header.linkedin { background: #0A66C2; }
+
+    .platform-card-body {
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .platform-card-body h3 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--tan);
+      margin-bottom: 10px;
+    }
+
+    /* Day pills */
+    .day-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+    .day-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 32px;
+      border-radius: var(--radius);
+      font-size: 12px;
+      font-weight: 600;
+      border: 2px solid var(--border);
+      color: var(--tan);
+      background: var(--cream);
+    }
+    .day-pill.hot {
+      background: var(--red);
+      color: var(--white);
+      border-color: var(--red);
+    }
+    .day-pill.warm {
+      background: var(--yellow);
+      color: var(--brown);
+      border-color: var(--yellow);
+    }
+    .day-pill.cold {
+      background: var(--cream);
+      color: var(--tan-light);
+      border-color: var(--border);
+    }
+
+    /* Time blocks */
+    .time-block {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .time-badge {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--brown);
+      background: var(--yellow);
+      border: 2px solid var(--brown);
+      border-radius: var(--radius);
+      padding: 4px 12px;
+      box-shadow: var(--shadow-sm);
+      white-space: nowrap;
+    }
+    .time-label {
+      font-size: 13px;
+      color: var(--brown-mid);
+    }
+
+    .worst-time {
+      font-size: 12px;
+      color: var(--tan);
+      margin-top: 8px;
+      padding: 6px 10px;
+      background: var(--cream);
+      border-radius: var(--radius);
+      border-left: 3px solid var(--border-dark);
+    }
+    .worst-time strong { color: var(--red); }
+
+    .why-box {
+      grid-column: 1 / -1;
+      background: var(--cream);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      font-size: 14px;
+      color: var(--brown-mid);
+      line-height: 1.6;
+      border-left: 4px solid var(--yellow);
+    }
+    .why-box strong {
+      color: var(--brown);
+      font-weight: 600;
+    }
+
+    /* ─── WEEKLY HEATMAP ─────────────────────────────────── */
+    .heatmap-section {
+      margin-bottom: 56px;
+    }
+    .heatmap-section h2 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+      color: var(--brown);
+    }
+    .heatmap-section > p {
+      font-size: 14px;
+      color: var(--tan);
+      margin-bottom: 24px;
+    }
+
+    .heatmap-wrapper {
+      background: var(--white);
+      border: 2px solid var(--brown);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 24px;
+      overflow-x: auto;
+    }
+
+    .heatmap-grid {
+      display: grid;
+      grid-template-columns: 56px repeat(24, 1fr);
+      gap: 2px;
+      min-width: 700px;
+    }
+
+    .heatmap-label {
+      display: flex;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--brown);
+      padding-right: 8px;
+    }
+    .heatmap-hour-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--tan);
+      text-align: center;
+      padding-bottom: 4px;
+    }
+    .heatmap-corner { /* empty top-left */ }
+
+    .heatmap-cell {
+      aspect-ratio: 1;
+      min-height: 20px;
+      border-radius: 3px;
+      transition: transform .1s;
+    }
+    .heatmap-cell:hover {
+      transform: scale(1.3);
+      z-index: 2;
+      position: relative;
+    }
+
+    /* Heat levels */
+    .heat-0 { background: var(--cream); }
+    .heat-1 { background: #F0D8A0; }
+    .heat-2 { background: #E8C030; }
+    .heat-3 { background: #D4952A; }
+    .heat-4 { background: #C0431A; }
+    .heat-5 { background: #8B1A0A; }
+
+    .heatmap-legend {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 16px;
+      font-size: 12px;
+      color: var(--tan);
+    }
+    .legend-cell {
+      width: 20px;
+      height: 20px;
+      border-radius: 3px;
+    }
+
+    /* ─── TIPS ────────────────────────────────────────────── */
+    .tips-section h2 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+      color: var(--brown);
+    }
+    .tips-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .tip-card {
+      background: var(--white);
+      border: 2px solid var(--brown);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-sm);
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--brown-mid);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .tip-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      background: var(--yellow);
+      border: 2px solid var(--brown);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-sm);
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 16px;
+      color: var(--brown);
+    }
+
+    @media (max-width: 700px) {
+      .platform-card-body {
+        grid-template-columns: 1fr;
+      }
+      .tips-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">SSSB <span>Studio</span></div>
+      <nav class="header-nav">
+        <a href="index.html">Skapa & Schemalägg</a>
+        <a href="publicering.html">Publiceringsplan</a>
+        <a href="ideer.html">Idéer</a>
+        <a href="omskrivaren.html">Omskrivaren</a>
+        <a href="svarsmall.html">Svarsmall</a>
+        <a href="kampanj.html">Kampanjer</a>
+        <a href="basta-tid.html" class="active">Bästa tid</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-eyebrow">Timing & räckvidd</div>
+      <h1>Bästa tid att <em>posta</em></h1>
+      <p>Rekommenderade tider per kanal — baserat på er målgrupp (studenter 18–28, Stockholm).</p>
+    </section>
+
+    <!-- PLATFORM CARDS -->
+    <div class="platform-cards">
+
+      <!-- INSTAGRAM -->
+      <div class="platform-card">
+        <div class="platform-card-header instagram">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          Instagram
+        </div>
+        <div class="platform-card-body">
+          <div>
+            <h3>Bästa dagar</h3>
+            <div class="day-row">
+              <span class="day-pill cold">Mån</span>
+              <span class="day-pill hot">Tis</span>
+              <span class="day-pill hot">Ons</span>
+              <span class="day-pill hot">Tor</span>
+              <span class="day-pill cold">Fre</span>
+              <span class="day-pill cold">Lör</span>
+              <span class="day-pill cold">Sön</span>
+            </div>
+          </div>
+          <div>
+            <h3>Bästa tider</h3>
+            <div class="time-block">
+              <span class="time-badge">11–13</span>
+              <span class="time-label">Lunchscroll</span>
+            </div>
+            <div class="time-block">
+              <span class="time-badge">18–20</span>
+              <span class="time-label">Efter plugg</span>
+            </div>
+            <div class="worst-time"><strong>Undvik:</strong> Söndag morgon</div>
+          </div>
+          <div class="why-box">
+            <strong>Varför?</strong> Studenter scrollar Instagram på lunch och efter föreläsningar. Tisdag–torsdag har högst engagemang eftersom studenterna är i sin vardagsrutin.
+          </div>
+        </div>
+      </div>
+
+      <!-- TIKTOK -->
+      <div class="platform-card">
+        <div class="platform-card-header tiktok">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V9.05a8.27 8.27 0 004.76 1.5V7.1a4.83 4.83 0 01-1-.41z"/></svg>
+          TikTok
+        </div>
+        <div class="platform-card-body">
+          <div>
+            <h3>Bästa dagar</h3>
+            <div class="day-row">
+              <span class="day-pill hot">Mån</span>
+              <span class="day-pill cold">Tis</span>
+              <span class="day-pill hot">Ons</span>
+              <span class="day-pill cold">Tor</span>
+              <span class="day-pill hot">Fre</span>
+              <span class="day-pill cold">Lör</span>
+              <span class="day-pill cold">Sön</span>
+            </div>
+          </div>
+          <div>
+            <h3>Bästa tider</h3>
+            <div class="time-block">
+              <span class="time-badge">19–22</span>
+              <span class="time-label">Kvällshäng</span>
+            </div>
+            <div class="time-block">
+              <span class="time-badge">12–13</span>
+              <span class="time-label">Lunch</span>
+            </div>
+            <div class="worst-time"><strong>Undvik:</strong> Tidig morgon</div>
+          </div>
+          <div class="why-box">
+            <strong>Varför?</strong> TikTok-användning peakar på kvällen, särskilt bland 18–24-åringar. Fredag kväll och måndag kväll har extra hög aktivitet.
+          </div>
+        </div>
+      </div>
+
+      <!-- LINKEDIN -->
+      <div class="platform-card">
+        <div class="platform-card-header linkedin">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </div>
+        <div class="platform-card-body">
+          <div>
+            <h3>Bästa dagar</h3>
+            <div class="day-row">
+              <span class="day-pill cold">Mån</span>
+              <span class="day-pill hot">Tis</span>
+              <span class="day-pill hot">Ons</span>
+              <span class="day-pill cold">Tor</span>
+              <span class="day-pill cold">Fre</span>
+              <span class="day-pill cold">Lör</span>
+              <span class="day-pill cold">Sön</span>
+            </div>
+          </div>
+          <div>
+            <h3>Bästa tider</h3>
+            <div class="time-block">
+              <span class="time-badge">08–10</span>
+              <span class="time-label">Morgonpendling</span>
+            </div>
+            <div class="time-block">
+              <span class="time-badge">12–13</span>
+              <span class="time-label">Lunch</span>
+            </div>
+            <div class="worst-time"><strong>Undvik:</strong> Helger</div>
+          </div>
+          <div class="why-box">
+            <strong>Varför?</strong> LinkedIn är en professionell plattform som är mest aktiv under arbetstid. Tisdag morgon ger ofta dubbelt så många visningar jämfört med andra dagar.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- WEEKLY HEATMAP -->
+    <section class="heatmap-section">
+      <h2>Veckoöversikt</h2>
+      <p>Kombinerad aktivitet alla plattformar — mörkare = fler plattformar aktiva samtidigt.</p>
+
+      <div class="heatmap-wrapper">
+        <div class="heatmap-grid">
+          <!-- Header row -->
+          <div class="heatmap-corner"></div>
+          <div class="heatmap-hour-label">0</div>
+          <div class="heatmap-hour-label">1</div>
+          <div class="heatmap-hour-label">2</div>
+          <div class="heatmap-hour-label">3</div>
+          <div class="heatmap-hour-label">4</div>
+          <div class="heatmap-hour-label">5</div>
+          <div class="heatmap-hour-label">6</div>
+          <div class="heatmap-hour-label">7</div>
+          <div class="heatmap-hour-label">8</div>
+          <div class="heatmap-hour-label">9</div>
+          <div class="heatmap-hour-label">10</div>
+          <div class="heatmap-hour-label">11</div>
+          <div class="heatmap-hour-label">12</div>
+          <div class="heatmap-hour-label">13</div>
+          <div class="heatmap-hour-label">14</div>
+          <div class="heatmap-hour-label">15</div>
+          <div class="heatmap-hour-label">16</div>
+          <div class="heatmap-hour-label">17</div>
+          <div class="heatmap-hour-label">18</div>
+          <div class="heatmap-hour-label">19</div>
+          <div class="heatmap-hour-label">20</div>
+          <div class="heatmap-hour-label">21</div>
+          <div class="heatmap-hour-label">22</div>
+          <div class="heatmap-hour-label">23</div>
+
+          <!-- Måndag: IG off, TikTok hot (12-13, 19-22), LI off -->
+          <div class="heatmap-label">Mån</div>
+          <div class="heatmap-cell heat-0"></div><!--0-->
+          <div class="heatmap-cell heat-0"></div><!--1-->
+          <div class="heatmap-cell heat-0"></div><!--2-->
+          <div class="heatmap-cell heat-0"></div><!--3-->
+          <div class="heatmap-cell heat-0"></div><!--4-->
+          <div class="heatmap-cell heat-0"></div><!--5-->
+          <div class="heatmap-cell heat-0"></div><!--6-->
+          <div class="heatmap-cell heat-0"></div><!--7-->
+          <div class="heatmap-cell heat-0"></div><!--8-->
+          <div class="heatmap-cell heat-0"></div><!--9-->
+          <div class="heatmap-cell heat-0"></div><!--10-->
+          <div class="heatmap-cell heat-1"></div><!--11-->
+          <div class="heatmap-cell heat-2"></div><!--12-->
+          <div class="heatmap-cell heat-1"></div><!--13-->
+          <div class="heatmap-cell heat-0"></div><!--14-->
+          <div class="heatmap-cell heat-0"></div><!--15-->
+          <div class="heatmap-cell heat-0"></div><!--16-->
+          <div class="heatmap-cell heat-0"></div><!--17-->
+          <div class="heatmap-cell heat-1"></div><!--18-->
+          <div class="heatmap-cell heat-3"></div><!--19-->
+          <div class="heatmap-cell heat-3"></div><!--20-->
+          <div class="heatmap-cell heat-3"></div><!--21-->
+          <div class="heatmap-cell heat-1"></div><!--22-->
+          <div class="heatmap-cell heat-0"></div><!--23-->
+
+          <!-- Tisdag: IG hot (11-13, 18-20), TikTok off, LI hot (8-10, 12-13) -->
+          <div class="heatmap-label">Tis</div>
+          <div class="heatmap-cell heat-0"></div><!--0-->
+          <div class="heatmap-cell heat-0"></div><!--1-->
+          <div class="heatmap-cell heat-0"></div><!--2-->
+          <div class="heatmap-cell heat-0"></div><!--3-->
+          <div class="heatmap-cell heat-0"></div><!--4-->
+          <div class="heatmap-cell heat-0"></div><!--5-->
+          <div class="heatmap-cell heat-0"></div><!--6-->
+          <div class="heatmap-cell heat-0"></div><!--7-->
+          <div class="heatmap-cell heat-2"></div><!--8-->
+          <div class="heatmap-cell heat-2"></div><!--9-->
+          <div class="heatmap-cell heat-1"></div><!--10-->
+          <div class="heatmap-cell heat-3"></div><!--11-->
+          <div class="heatmap-cell heat-5"></div><!--12-->
+          <div class="heatmap-cell heat-3"></div><!--13-->
+          <div class="heatmap-cell heat-0"></div><!--14-->
+          <div class="heatmap-cell heat-0"></div><!--15-->
+          <div class="heatmap-cell heat-0"></div><!--16-->
+          <div class="heatmap-cell heat-1"></div><!--17-->
+          <div class="heatmap-cell heat-3"></div><!--18-->
+          <div class="heatmap-cell heat-3"></div><!--19-->
+          <div class="heatmap-cell heat-2"></div><!--20-->
+          <div class="heatmap-cell heat-0"></div><!--21-->
+          <div class="heatmap-cell heat-0"></div><!--22-->
+          <div class="heatmap-cell heat-0"></div><!--23-->
+
+          <!-- Onsdag: IG hot (11-13, 18-20), TikTok hot (12-13, 19-22), LI hot (8-10, 12-13) -->
+          <div class="heatmap-label">Ons</div>
+          <div class="heatmap-cell heat-0"></div><!--0-->
+          <div class="heatmap-cell heat-0"></div><!--1-->
+          <div class="heatmap-cell heat-0"></div><!--2-->
+          <div class="heatmap-cell heat-0"></div><!--3-->
+          <div class="heatmap-cell heat-0"></div><!--4-->
+          <div class="heatmap-cell heat-0"></div><!--5-->
+          <div class="heatmap-cell heat-0"></div><!--6-->
+          <div class="heatmap-cell heat-0"></div><!--7-->
+          <div class="heatmap-cell heat-2"></div><!--8-->
+          <div class="heatmap-cell heat-2"></div><!--9-->
+          <div class="heatmap-cell heat-1"></div><!--10-->
+          <div class="heatmap-cell heat-3"></div><!--11-->
+          <div class="heatmap-cell heat-5"></div><!--12-->
+          <div class="heatmap-cell heat-4"></div><!--13-->
+          <div class="heatmap-cell heat-0"></div><!--14-->
+          <div class="heatmap-cell heat-0"></div><!--15-->
+          <div class="heatmap-cell heat-0"></div><!--16-->
+          <div class="heatmap-cell heat-1"></div><!--17-->
+          <div class="heatmap-cell heat-3"></div><!--18-->
+          <div class="heatmap-cell heat-4"></div><!--19-->
+          <div class="heatmap-cell heat-4"></div><!--20-->
+          <div class="heatmap-cell heat-3"></div><!--21-->
+          <div class="heatmap-cell heat-1"></div><!--22-->
+          <div class="heatmap-cell heat-0"></div><!--23-->
+
+          <!-- Torsdag: IG hot (11-13, 18-20), TikTok off, LI off -->
+          <div class="heatmap-label">Tor</div>
+          <div class="heatmap-cell heat-0"></div><!--0-->
+          <div class="heatmap-cell heat-0"></div><!--1-->
+          <div class="heatmap-cell heat-0"></div><!--2-->
+          <div class="heatmap-cell heat-0"></div><!--3-->
+          <div class="heatmap-cell heat-0"></div><!--4-->
+          <div class="heatmap-cell heat-0"></div><!--5-->
+          <div class="heatmap-cell heat-0"></div><!--6-->
+          <div class="heatmap-cell heat-0"></div><!--7-->
+          <div class="heatmap-cell heat-0"></div><!--8-->
+          <div class="heatmap-cell heat-0"></div><!--9-->
+          <div class="heatmap-cell heat-1"></div><!--10-->
+          <div class="heatmap-cell heat-3"></div><!--11-->
+          <div class="heatmap-cell heat-3"></div><!--12-->
+          <div class="heatmap-cell heat-2"></div><!--13-->
+          <div class="heatmap-cell heat-0"></div><!--14-->
+          <div class="heatmap-cell heat-0"></div><!--15-->
+          <div class="heatmap-cell heat-0"></div><!--16-->
+          <div class="heatmap-cell heat-1"></div><!--17-->
+          <div class="heatmap-cell heat-3"></div><!--18-->
+          <div class="heatmap-cell heat-3"></div><!--19-->
+          <div class="heatmap-cell heat-2"></div><!--20-->
+          <div class="heatmap-cell heat-0"></div><!--21-->
+          <div class="heatmap-cell heat-0"></div><!--22-->
+          <div class="heatmap-cell heat-0"></div><!--23-->
+
+          <!-- Fredag: IG off, TikTok hot (12-13, 19-22), LI off -->
+          <div class="heatmap-label">Fre</div>
+          <div class="heatmap-cell heat-0"></div><!--0-->
+          <div class="heatmap-cell heat-0"></div><!--1-->
+          <div class="heatmap-cell heat-0"></div><!--2-->
+          <div class="heatmap-cell heat-0"></div><!--3-->
+          <div class="heatmap-cell heat-0"></div><!--4-->
+          <div class="heatmap-cell heat-0"></div><!--5-->
+          <div class="heatmap-cell heat-0"></div><!--6-->
+          <div class="heatmap-cell heat-0"></div><!--7-->
+          <div class="heatmap-cell heat-0"></div><!--8-->
+          <div class="heatmap-cell heat-0"></div><!--9-->
+          <div class="heatmap-cell heat-0"></div><!--10-->
+          <div class="heatmap-cell heat-1"></div><!--11-->
+          <div class="heatmap-cell heat-2"></div><!--12-->
+          <div class="heatmap-cell heat-1"></div><!--13-->
+          <div class="heatmap-cell heat-0"></div><!--14-->
+          <div class="heatmap-cell heat-0"></div><!--15-->
+          <div class="heatmap-cell heat-0"></div><!--16-->
+          <div class="heatmap-cell heat-0"></div><!--17-->
+          <div class="heatmap-cell heat-1"></div><!--18-->
+          <div class="heatmap-cell heat-3"></div><!--19-->
+          <div class="heatmap-cell heat-3"></div><!--20-->
+          <div class="heatmap-cell heat-3"></div><!--21-->
+          <div class="heatmap-cell heat-2"></div><!--22-->
+          <div class="heatmap-cell heat-0"></div><!--23-->
+
+          <!-- Lördag: all off, low activity -->
+          <div class="heatmap-label">Lör</div>
+          <div class="heatmap-cell heat-0"></div><!--0-->
+          <div class="heatmap-cell heat-0"></div><!--1-->
+          <div class="heatmap-cell heat-0"></div><!--2-->
+          <div class="heatmap-cell heat-0"></div><!--3-->
+          <div class="heatmap-cell heat-0"></div><!--4-->
+          <div class="heatmap-cell heat-0"></div><!--5-->
+          <div class="heatmap-cell heat-0"></div><!--6-->
+          <div class="heatmap-cell heat-0"></div><!--7-->
+          <div class="heatmap-cell heat-0"></div><!--8-->
+          <div class="heatmap-cell heat-0"></div><!--9-->
+          <div class="heatmap-cell heat-0"></div><!--10-->
+          <div class="heatmap-cell heat-1"></div><!--11-->
+          <div class="heatmap-cell heat-1"></div><!--12-->
+          <div class="heatmap-cell heat-1"></div><!--13-->
+          <div class="heatmap-cell heat-0"></div><!--14-->
+          <div class="heatmap-cell heat-0"></div><!--15-->
+          <div class="heatmap-cell heat-0"></div><!--16-->
+          <div class="heatmap-cell heat-0"></div><!--17-->
+          <div class="heatmap-cell heat-1"></div><!--18-->
+          <div class="heatmap-cell heat-1"></div><!--19-->
+          <div class="heatmap-cell heat-1"></div><!--20-->
+          <div class="heatmap-cell heat-1"></div><!--21-->
+          <div class="heatmap-cell heat-0"></div><!--22-->
+          <div class="heatmap-cell heat-0"></div><!--23-->
+
+          <!-- Söndag: worst for IG, low overall -->
+          <div class="heatmap-label">Sön</div>
+          <div class="heatmap-cell heat-0"></div><!--0-->
+          <div class="heatmap-cell heat-0"></div><!--1-->
+          <div class="heatmap-cell heat-0"></div><!--2-->
+          <div class="heatmap-cell heat-0"></div><!--3-->
+          <div class="heatmap-cell heat-0"></div><!--4-->
+          <div class="heatmap-cell heat-0"></div><!--5-->
+          <div class="heatmap-cell heat-0"></div><!--6-->
+          <div class="heatmap-cell heat-0"></div><!--7-->
+          <div class="heatmap-cell heat-0"></div><!--8-->
+          <div class="heatmap-cell heat-0"></div><!--9-->
+          <div class="heatmap-cell heat-0"></div><!--10-->
+          <div class="heatmap-cell heat-0"></div><!--11-->
+          <div class="heatmap-cell heat-1"></div><!--12-->
+          <div class="heatmap-cell heat-0"></div><!--13-->
+          <div class="heatmap-cell heat-0"></div><!--14-->
+          <div class="heatmap-cell heat-0"></div><!--15-->
+          <div class="heatmap-cell heat-0"></div><!--16-->
+          <div class="heatmap-cell heat-0"></div><!--17-->
+          <div class="heatmap-cell heat-1"></div><!--18-->
+          <div class="heatmap-cell heat-1"></div><!--19-->
+          <div class="heatmap-cell heat-1"></div><!--20-->
+          <div class="heatmap-cell heat-0"></div><!--21-->
+          <div class="heatmap-cell heat-0"></div><!--22-->
+          <div class="heatmap-cell heat-0"></div><!--23-->
+        </div>
+
+        <div class="heatmap-legend">
+          <span>Låg</span>
+          <div class="legend-cell heat-0"></div>
+          <div class="legend-cell heat-1"></div>
+          <div class="legend-cell heat-2"></div>
+          <div class="legend-cell heat-3"></div>
+          <div class="legend-cell heat-4"></div>
+          <div class="legend-cell heat-5"></div>
+          <span>Hög</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIPS -->
+    <section class="tips-section">
+      <h2>Snabba tips</h2>
+      <div class="tips-grid">
+        <div class="tip-card">
+          <div class="tip-icon">1</div>
+          <div>Posta konsekvent samma tider — algoritmen belönar det.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">2</div>
+          <div>Stories funkar hela dagen, Reels peakar 11–13 och 18–20.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">3</div>
+          <div>LinkedIn-inlägg på tisdag morgon får 2x mer visningar.</div>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">4</div>
+          <div>Undvik att posta efter 22 på LinkedIn.</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="auth.js"></script>
+</body>
+</html>

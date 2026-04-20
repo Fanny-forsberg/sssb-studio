@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kampanjplanerare — SSSB Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ─── KAMPANJ PAGE ───────────────────────────────────── */
+    .kampanj-form { max-width: 700px; }
+
+    .date-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    input[type="date"], select {
+      border: 2px solid var(--border-dark);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      font-size: 15px;
+      font-family: inherit;
+      color: var(--brown);
+      background: var(--cream);
+      transition: border-color .15s, box-shadow .15s;
+      outline: none;
+      width: 100%;
+      -webkit-appearance: none;
+    }
+    input[type="date"]:focus, select:focus {
+      border-color: var(--brown);
+      box-shadow: 3px 3px 0 var(--brown);
+      background: var(--white);
+    }
+
+    /* ─── RESULTS ────────────────────────────────────────── */
+    .campaign-results { margin-top: 48px; }
+    .campaign-results h2 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin-bottom: 6px;
+      color: var(--brown);
+    }
+    .campaign-results-sub {
+      font-size: 13px;
+      color: var(--tan);
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    /* ─── OVERVIEW CARD ──────────────────────────────────── */
+    .overview-card {
+      background: var(--white);
+      border: 2px solid var(--brown);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      box-shadow: var(--shadow);
+      margin-bottom: 32px;
+    }
+    .overview-card h3 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 22px;
+      font-weight: 900;
+      margin-bottom: 8px;
+      color: var(--brown);
+    }
+    .overview-meta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .overview-tag {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      padding: 4px 14px;
+      border-radius: 100px;
+      background: var(--cream);
+      border: 1.5px solid var(--border-dark);
+      color: var(--tan);
+    }
+    .overview-strategy {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--brown-mid);
+    }
+
+    /* ─── TIMELINE ───────────────────────────────────────── */
+    .timeline { display: flex; flex-direction: column; gap: 24px; margin-bottom: 40px; }
+
+    .week-card {
+      background: var(--white);
+      border: 2px solid var(--brown);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .week-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 24px;
+      border-bottom: 2px solid var(--brown);
+      background: var(--cream);
+    }
+    .week-num {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 900;
+      font-size: 14px;
+      color: var(--white);
+      background: var(--red);
+      border: 2px solid var(--brown);
+      border-radius: 100px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .week-theme {
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--brown);
+    }
+
+    .week-posts { padding: 8px 0; }
+
+    .post-row {
+      display: grid;
+      grid-template-columns: 110px 90px 1fr;
+      gap: 16px;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+    .post-row:last-child { border-bottom: none; }
+
+    .post-platform-tag {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .post-platform-tag.instagram { background: #FFF0F6; color: #C0255C; }
+    .post-platform-tag.tiktok { background: var(--brown); color: var(--cream); }
+    .post-platform-tag.linkedin { background: #E8F3FB; color: #0062A0; }
+
+    .post-format {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--tan);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      padding-top: 2px;
+    }
+
+    .post-content { display: flex; flex-direction: column; gap: 4px; }
+    .post-topic {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--brown);
+      line-height: 1.4;
+    }
+    .post-hook {
+      font-size: 13px;
+      color: var(--tan);
+      line-height: 1.5;
+      font-style: italic;
+    }
+
+    /* ─── CHECKLIST ───────────────────────────────────────── */
+    .checklist-card {
+      background: var(--white);
+      border: 2px solid var(--brown);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      box-shadow: var(--shadow);
+    }
+    .checklist-card h3 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 22px;
+      font-weight: 900;
+      margin-bottom: 16px;
+      color: var(--brown);
+    }
+    .checklist-items { display: flex; flex-direction: column; gap: 10px; }
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--brown);
+      line-height: 1.5;
+    }
+    .checklist-item input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border: 2px solid var(--border-dark);
+      border-radius: var(--radius);
+      background: var(--cream);
+      cursor: pointer;
+      margin-top: 1px;
+      position: relative;
+      transition: all .15s;
+    }
+    .checklist-item input[type="checkbox"]:checked {
+      background: var(--green);
+      border-color: var(--green);
+    }
+    .checklist-item input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 2px;
+      width: 6px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    .checklist-item.checked span {
+      text-decoration: line-through;
+      color: var(--tan-light);
+    }
+
+    /* ─── LOADING ─────────────────────────────────────────── */
+    .kampanj-loading {
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .kampanj-loading .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid var(--border);
+      border-top-color: var(--red);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .kampanj-loading p {
+      font-size: 14px;
+      color: var(--tan);
+      font-weight: 500;
+    }
+
+    .kampanj-error {
+      background: #FFF0F0;
+      border: 2px solid var(--red);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      color: var(--red);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .date-row { grid-template-columns: 1fr; }
+      .post-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+      .overview-meta { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">SSSB <span>Studio</span></div>
+    <nav class="header-nav">
+      <a href="index.html">Skapa & Schemalägg</a>
+      <a href="publicering.html">Publiceringsplan</a>
+      <a href="ideer.html">Idéer</a>
+      <a href="omskrivaren.html">Omskrivaren</a>
+      <a href="svarsmall.html">Svarsmall</a>
+      <a href="kampanj.html" class="active">Kampanjer</a>
+      <a href="basta-tid.html">Bästa tid</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <h1>Kampanj<em>planerare</em></h1>
+    <p>Planera en kampanj från idé till publicering — med tidslinje, kanaler och färdigt content.</p>
+  </section>
+
+  <section class="kampanj-form">
+    <div class="card">
+
+      <div class="field">
+        <label for="campaign-name">Kampanjnamn</label>
+        <input type="text" id="campaign-name" placeholder="T.ex. Inflyttning höst 2026">
+      </div>
+
+      <div class="field">
+        <label for="campaign-desc">Beskrivning & mål</label>
+        <textarea id="campaign-desc" rows="3" placeholder="T.ex. Öka köregistreringar med 20% inför hösten"></textarea>
+      </div>
+
+      <div class="date-row">
+        <div class="field">
+          <label for="campaign-start">Startdatum</label>
+          <input type="date" id="campaign-start">
+        </div>
+        <div class="field">
+          <label for="campaign-end">Slutdatum</label>
+          <input type="date" id="campaign-end">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Kanaler</label>
+        <div class="platforms">
+          <label class="platform-toggle">
+            <input type="checkbox" name="platform" value="instagram">
+            <span class="platform-chip instagram">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              Instagram
+            </span>
+          </label>
+          <label class="platform-toggle">
+            <input type="checkbox" name="platform" value="tiktok">
+            <span class="platform-chip tiktok">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.17 8.17 0 004.79 1.52V6.79a4.85 4.85 0 01-1.02-.1z"/></svg>
+              TikTok
+            </span>
+          </label>
+          <label class="platform-toggle">
+            <input type="checkbox" name="platform" value="linkedin">
+            <span class="platform-chip linkedin">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="campaign-budget">Budget</label>
+        <select id="campaign-budget">
+          <option value="none">Ingen budget (organiskt)</option>
+          <option value="small">Liten (&lt;5 000 kr)</option>
+          <option value="medium">Medel (5 000–20 000 kr)</option>
+          <option value="large">Stor (&gt;20 000 kr)</option>
+        </select>
+      </div>
+
+      <button id="generateBtn" class="btn-primary" onclick="generateCampaign()">
+        Generera kampanjplan
+      </button>
+
+    </div>
+  </section>
+
+  <section class="campaign-results" id="results" style="display:none;">
+    <h2 id="results-title">Kampanjplan</h2>
+    <p class="campaign-results-sub" id="results-sub"></p>
+    <div id="campaign-container"></div>
+  </section>
+
+</main>
+
+<script src="auth.js"></script>
+<script>
+  function esc(str) {
+    const d = document.createElement('div');
+    d.textContent = str || '';
+    return d.innerHTML;
+  }
+
+  function platformClass(name) {
+    const n = name.toLowerCase();
+    if (n.includes('instagram')) return 'instagram';
+    if (n.includes('tiktok')) return 'tiktok';
+    if (n.includes('linkedin')) return 'linkedin';
+    return '';
+  }
+
+  async function generateCampaign() {
+    const name = document.getElementById('campaign-name').value.trim();
+    const description = document.getElementById('campaign-desc').value.trim();
+    const start_date = document.getElementById('campaign-start').value;
+    const end_date = document.getElementById('campaign-end').value;
+    const budget = document.getElementById('campaign-budget').value;
+
+    const checked = document.querySelectorAll('input[name="platform"]:checked');
+    const platforms = Array.from(checked).map(c => c.value);
+
+    if (!name || !description || !start_date || !end_date || !platforms.length) {
+      alert('Fyll i alla fält och välj minst en kanal.');
+      return;
+    }
+
+    const btn = document.getElementById('generateBtn');
+    btn.disabled = true;
+    btn.textContent = 'Genererar kampanjplan...';
+
+    const section = document.getElementById('results');
+    const container = document.getElementById('campaign-container');
+    section.style.display = 'block';
+    container.innerHTML = `
+      <div class="kampanj-loading">
+        <div class="spinner"></div>
+        <p>Skapar kampanjplan med strategi, timeline och checklista...</p>
+      </div>
+    `;
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    try {
+      const res = await fetch('/api/campaign', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, description, start_date, end_date, platforms, budget })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.campaign) {
+        container.innerHTML = `<div class="kampanj-error">${data.error || 'Kunde inte generera kampanjplan. Försök igen.'}</div>`;
+        return;
+      }
+
+      const c = data.campaign;
+
+      document.getElementById('results-title').textContent = name;
+      document.getElementById('results-sub').textContent =
+        `${start_date} → ${end_date} · ${platforms.map(p => p === 'instagram' ? 'Instagram' : p === 'tiktok' ? 'TikTok' : 'LinkedIn').join(', ')} · ${c.weeks?.length || 0} veckor`;
+
+      let html = '';
+
+      // Overview card
+      html += `
+        <div class="overview-card">
+          <h3>Strategi</h3>
+          <div class="overview-meta">
+            <span class="overview-tag">${esc(start_date)} → ${esc(end_date)}</span>
+            ${platforms.map(p => `<span class="overview-tag">${esc(p === 'instagram' ? 'Instagram' : p === 'tiktok' ? 'TikTok' : 'LinkedIn')}</span>`).join('')}
+          </div>
+          <div class="overview-strategy">${esc(c.strategy)}</div>
+        </div>
+      `;
+
+      // Timeline
+      if (c.weeks && c.weeks.length) {
+        html += '<div class="timeline">';
+        c.weeks.forEach(week => {
+          html += `
+            <div class="week-card">
+              <div class="week-header">
+                <div class="week-num">V${week.week}</div>
+                <div class="week-theme">${esc(week.theme)}</div>
+              </div>
+              <div class="week-posts">
+          `;
+          (week.posts || []).forEach(post => {
+            const cls = platformClass(post.platform);
+            html += `
+              <div class="post-row">
+                <div><span class="post-platform-tag ${cls}">${esc(post.platform)}</span></div>
+                <div class="post-format">${esc(post.format)}</div>
+                <div class="post-content">
+                  <div class="post-topic">${esc(post.topic)}</div>
+                  <div class="post-hook">"${esc(post.hook)}"</div>
+                </div>
+              </div>
+            `;
+          });
+          html += '</div></div>';
+        });
+        html += '</div>';
+      }
+
+      // Checklist
+      if (c.checklist && c.checklist.length) {
+        html += `
+          <div class="checklist-card">
+            <h3>Checklista</h3>
+            <div class="checklist-items">
+              ${c.checklist.map((item, i) => `
+                <label class="checklist-item" id="check-${i}">
+                  <input type="checkbox" onchange="this.parentElement.classList.toggle('checked', this.checked)">
+                  <span>${esc(item)}</span>
+                </label>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+
+    } catch (err) {
+      container.innerHTML = `<div class="kampanj-error">Nätverksfel: ${err.message}</div>`;
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Generera kampanjplan';
+    }
+  }
+</script>
+
+</body>
+</html>
