@@ -97,6 +97,7 @@ async function saveAll() {
     status.textContent = 'Sparat!';
     status.style.color = '#059669';
     setTimeout(() => status.textContent = '', 3000);
+    if (typeof showSuccessToast === 'function') showSuccessToast('Inlägg sparat!');
     loadHistory();
   }
 }
@@ -184,6 +185,7 @@ async function sendToLater(platform) {
         btn.textContent = 'Skickat!';
         setTimeout(() => { btn.textContent = 'Later'; }, 2500);
       }
+      if (typeof showSuccessToast === 'function') showSuccessToast('Skickat till Later!');
       return;
     }
   } catch (e) {

@@ -133,6 +133,7 @@
 </main>
 
 <script src="auth.js"></script>
+<script src="confetti.js"></script>
 <script>
   const platformNames = { tiktok: 'TikTok', instagram: 'Instagram', linkedin: 'LinkedIn' };
 
@@ -274,6 +275,7 @@
     await navigator.clipboard.writeText(trend.caption);
     btn.textContent = 'Kopierad!';
     btn.classList.add('copied');
+    if (typeof showSuccessToast === 'function') showSuccessToast('Caption kopierad!');
     setTimeout(() => { btn.textContent = 'Kopiera'; btn.classList.remove('copied'); }, 2000);
   }
 </script>

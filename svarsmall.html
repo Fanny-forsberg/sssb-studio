@@ -233,6 +233,7 @@
   </main>
 
   <script src="auth.js"></script>
+  <script src="confetti.js"></script>
   <script>
     const messageEl = document.getElementById('message');
     const generateBtn = document.getElementById('generateBtn');
@@ -319,6 +320,7 @@
       navigator.clipboard.writeText(text).then(() => {
         btn.textContent = 'Kopierad!';
         btn.classList.add('copied');
+        if (typeof showSuccessToast === 'function') showSuccessToast('Svar kopierat!');
         setTimeout(() => {
           btn.textContent = 'Kopiera';
           btn.classList.remove('copied');
