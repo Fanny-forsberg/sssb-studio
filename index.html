@@ -26,6 +26,71 @@
     </div>
   </header>
 
+  <!-- Disco balls -->
+  <div class="disco-container" id="disco-container">
+    <div class="disco-ball disco-1"><div class="disco-shine"></div></div>
+    <div class="disco-ball disco-2"><div class="disco-shine"></div></div>
+    <div class="disco-ball disco-3"><div class="disco-shine"></div></div>
+    <canvas class="disco-lights" id="disco-lights"></canvas>
+  </div>
+
+  <style>
+    .disco-container {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .disco-ball {
+      position: absolute;
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #fff 0%, #ddd 20%, #aaa 50%, #888 70%, #666 100%);
+      box-shadow: 0 0 30px rgba(255,255,255,.3), inset 0 0 15px rgba(255,255,255,.5);
+      animation: discoSway 4s ease-in-out infinite;
+    }
+    .disco-ball::before {
+      content: '';
+      position: absolute; inset: 3px;
+      border-radius: 50%;
+      background:
+        repeating-conic-gradient(
+          rgba(255,255,255,.15) 0deg 10deg,
+          rgba(200,200,200,.1) 10deg 20deg
+        );
+      animation: discoSpin 8s linear infinite;
+    }
+    .disco-ball::after {
+      content: '';
+      position: absolute;
+      top: -80px; left: 50%; width: 2px;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,.3));
+      transform: translateX(-50%);
+    }
+    .disco-shine {
+      position: absolute; inset: 0; border-radius: 50%;
+      background: radial-gradient(circle at 30% 25%, rgba(255,255,255,.8) 0%, transparent 40%);
+    }
+
+    .disco-1 { top: 80px; left: 12%; animation-duration: 3.5s; width: 50px; height: 50px; }
+    .disco-2 { top: 60px; right: 15%; animation-duration: 4.5s; animation-delay: .8s; width: 70px; height: 70px; }
+    .disco-3 { top: 90px; left: 50%; animation-duration: 5s; animation-delay: 1.5s; width: 45px; height: 45px; transform: translateX(-50%); }
+
+    @keyframes discoSway {
+      0%, 100% { transform: translateY(0) rotate(-2deg); }
+      50% { transform: translateY(8px) rotate(2deg); }
+    }
+    @keyframes discoSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    .disco-lights {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    }
+
+    /* Make main content sit above disco */
+    main { position: relative; z-index: 1; }
+    header { z-index: 100; }
+  </style>
+
   <main>
     <section class="hero">
       <div class="hero-eyebrow">Av, för, med studenter</div>
@@ -111,6 +176,88 @@
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     document.getElementById('schedule-date').value = tomorrow.toISOString().split('T')[0];
+
+    // Disco light beams
+    (function() {
+      const canvas = document.getElementById('disco-lights');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      const beamColors = [
+        'rgba(192,67,26,.06)',   // red
+        'rgba(232,192,48,.06)',  // yellow
+        'rgba(255,0,110,.05)',   // pink
+        'rgba(0,245,212,.05)',   // turquoise
+        'rgba(131,56,236,.05)', // purple
+        'rgba(58,134,255,.05)'  // blue
+      ];
+
+      const balls = [
+        { x: 0.12, y: 80 },
+        { x: 0.85, y: 60 },
+        { x: 0.50, y: 90 }
+      ];
+
+      const beams = [];
+      balls.forEach((ball, bi) => {
+        for (let i = 0; i < 6; i++) {
+          beams.push({
+            ballIndex: bi,
+            angle: (i / 6) * Math.PI * 2,
+            speed: 0.003 + Math.random() * 0.004,
+            length: 400 + Math.random() * 300,
+            width: 30 + Math.random() * 40,
+            color: beamColors[i % beamColors.length],
+            offset: Math.random() * Math.PI * 2
+          });
+        }
+      });
+
+      function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const t = performance.now() * 0.001;
+
+        beams.forEach(beam => {
+          const ball = balls[beam.ballIndex];
+          const bx = canvas.width * ball.x;
+          const by = ball.y + 30;
+          const angle = beam.angle + t * beam.speed + beam.offset;
+
+          const ex = bx + Math.cos(angle) * beam.length;
+          const ey = by + Math.sin(angle) * beam.length;
+
+          const grad = ctx.createLinearGradient(bx, by, ex, ey);
+          grad.addColorStop(0, beam.color);
+          grad.addColorStop(1, 'transparent');
+
+          ctx.save();
+          ctx.beginPath();
+          ctx.moveTo(bx, by);
+
+          const perpX = Math.cos(angle + Math.PI / 2) * beam.width;
+          const perpY = Math.sin(angle + Math.PI / 2) * beam.width;
+
+          ctx.lineTo(ex + perpX, ey + perpY);
+          ctx.lineTo(ex - perpX, ey - perpY);
+          ctx.closePath();
+
+          ctx.fillStyle = grad;
+          ctx.fill();
+          ctx.restore();
+        });
+      }
+
+      animate();
+    })();
   </script>
 </body>
 </html>
